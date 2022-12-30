@@ -1,0 +1,39 @@
+.header {
+  width: 100%;
+  height: 50px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px #dad7d7;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  &__left {
+    flex: 1 0 10%;
+  }
+  &__middle {
+    flex: 1 0 50%;
+    display: flex;
+    justify-content: center;
+    &__item {
+      display: flex;
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 30px;
+      .itemName {
+        height: 18px;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 18px;
+      }
+      i {
+        font-size: 18px;
+      }
+      &__active {
+        color: rgb(24, 144, 255);
+      }
+    }
+  }
+  &__right {
+    flex: 1 0 10%;
+  }
+}

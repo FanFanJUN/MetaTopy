@@ -1,0 +1,19 @@
+.aside {
+  height: calc(100vh - 50px);
+  width: 200px;
+  border-right: 1px solid #ddd;
+  &__list {
+    display: flex;
+    padding: 4px 16px 16px;
+    flex-wrap: wrap;
+    &__item {
+      flex: 1 0 25%;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      i {
+        font-size: 25px;
+      }
+    }
+  }
+}
