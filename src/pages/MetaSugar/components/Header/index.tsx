@@ -11,7 +11,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
     activeToolKey: '',
   });
 
-  const { meta } = useMeta();
+  const { meta2d } = useMeta();
 
   const _handleOp = (type: string) => {
     const isActive = state.activeToolKey === type;
@@ -23,30 +23,30 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
     switch (type) {
       case 'ditu':
         if (isActive) {
-          meta.hideMap();
+          meta2d.hideMap();
         } else {
-          meta.showMap();
+          meta2d.showMap();
         }
         break;
       case 'fangdajing':
         if (isActive) {
-          meta.hideMagnifier();
+          meta2d.hideMagnifier();
         } else {
-          meta.showMagnifier();
+          meta2d.showMagnifier();
         }
         break;
       case 'curve':
         if (isActive) {
-          meta.drawLine();
+          meta2d.drawLine();
         } else {
-          meta.drawLine('curve');
+          meta2d.drawLine('curve');
         }
         break;
       case 'qianbi':
         if (isActive) {
-          meta.stopPencil();
+          meta2d.stopPencil();
         } else {
-          meta.drawingPencil();
+          meta2d.drawingPencil();
         }
         break;
       default:
