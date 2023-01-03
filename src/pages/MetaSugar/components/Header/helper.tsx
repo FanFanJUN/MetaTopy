@@ -36,3 +36,29 @@ export const TOOL_LIST = [
     toolKey: 'jinzhimiaodian',
   },
 ];
+
+export const TOOL_LIST_LEFT = [
+  {
+    name: '文件',
+    toolKey: 'folder',
+  },
+  {
+    name: '保存',
+    toolKey: 'save',
+  },
+];
+
+export const FILE_LIST = [
+  {
+    label: '新建文件',
+    key: 'newFile',
+  },
+  {
+    label: '打开本地文件',
+    key: 'openLocalFile',
+  },
+  {
+    label: '下载JSON文件',
+    key: 'downLoadJson',
+  },
+];

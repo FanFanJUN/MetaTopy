@@ -8,8 +8,12 @@
   justify-content: space-around;
   &__left {
     flex: 1 0 10%;
+    display: flex;
+    height: 100%;
+    padding-left: 90px;
   }
   &__middle {
+    height: 100%;
     flex: 1 0 50%;
     display: flex;
     justify-content: center;
@@ -28,6 +32,9 @@
       i {
         font-size: 18px;
       }
+      &:hover {
+        color: rgb(24, 144, 255);
+      }
       &__active {
         color: rgb(24, 144, 255);
       }
@@ -35,5 +42,16 @@
   }
   &__right {
     flex: 1 0 10%;
+  }
+}
+
+.fileDropdown {
+  ul > li {
+    padding: 5px 12px 5px 28px;
+    height: 40px;
+    &:hover {
+      background: #1890ff;
+      color: #fff;
+    }
   }
 }

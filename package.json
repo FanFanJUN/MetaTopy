@@ -23,11 +23,14 @@
     "@ant-design/pro-layout": "^6.5.0",
     "@meta2d/core": "^1.0.0",
     "ahooks": "^3.7.4",
+    "antd": "^4.24.7",
+    "file-saver": "^2.0.5",
     "react": "17.x",
     "react-dom": "17.x",
     "umi": "^3.5.36"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@umijs/preset-react": "1.x",
