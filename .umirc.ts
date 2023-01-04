@@ -20,4 +20,5 @@ export default defineConfig({
       href: 'http://at.alicdn.com/t/c/font_2030495_fvd79jmq3oi.css',
     },
   ],
+  scripts: [{ src: `/canvas2svg.js` }],
 });

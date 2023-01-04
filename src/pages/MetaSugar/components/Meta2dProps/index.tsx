@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { BackgroundComponent } from './components';
 import styles from './index.less';
 
 interface IMeta2dPropsProps {
@@ -19,7 +20,7 @@ const Meta2dProps: React.FunctionComponent<IMeta2dPropsProps> = (props) => {
       case 'multi':
         return <h1>multi</h1>;
       default:
-        return <h1>默认</h1>;
+        return <BackgroundComponent />;
     }
   }, [type]);
   return <section className={styles.rightConf}>{_renderComp}</section>;

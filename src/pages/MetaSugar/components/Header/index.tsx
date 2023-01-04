@@ -1,19 +1,20 @@
 import { useSetState } from 'ahooks';
-import { Dropdown, MenuProps } from 'antd';
+import { Dropdown, Input, InputNumber, MenuProps, message } from 'antd';
 import React from 'react';
 import { useMeta } from '../../context';
-import { FILE_LIST, TOOL_LIST, TOOL_LIST_LEFT } from './helper';
+import { TOOL_LIST } from './helper';
 import styles from './index.less';
 import * as FileSaver from 'file-saver';
+import _ from 'lodash';
 
 interface IHeaderProps {}
 
 const Header: React.FunctionComponent<IHeaderProps> = (props) => {
+  const { meta2d } = useMeta();
   const [state, setState] = useSetState({
     activeToolKey: '',
+    lineWidth: meta2d?.data()?.lineWidth || 1,
   });
-
-  const { meta2d } = useMeta();
 
   const onHandleImportJson = () => {
     const input = document.createElement('input');
@@ -36,6 +37,38 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
       }
     };
     input.click();
+  };
+
+  const onHandleSaveToSvg = () => {
+    const C2S = window.C2S;
+    const ctx = new C2S(meta2d.canvas.width + 200, meta2d.canvas.height + 200);
+    // if (!meta2d.isEmptyData()) {
+    //   for (const item of meta2d.data().pens) {
+    //     item.render(ctx);
+    //   }
+    // }
+    let mySerializedSVG = ctx.getSerializedSvg();
+    mySerializedSVG = mySerializedSVG.replace(
+      '<defs/>',
+      `<defs>
+    <style type="text/css">
+      @font-face {
+        font-family: 'topology';
+        src: url('http://at.alicdn.com/t/font_1331132_h688rvffmbc.ttf?t=1569311680797') format('truetype');
+      }
+    </style>
+  </defs>`,
+    );
+    mySerializedSVG = mySerializedSVG.replace(/--le5le--/g, '&#x');
+    const urlObject = window.URL || window;
+    const export_blob = new Blob([mySerializedSVG]);
+    const url = urlObject.createObjectURL(export_blob);
+    const a = document.createElement('a');
+    a.setAttribute('download', 'meta2D.svg');
+    a.setAttribute('href', url);
+    const evt = document.createEvent('MouseEvents');
+    evt.initEvent('click', true, true);
+    a.dispatchEvent(evt);
   };
 
   const _handleOp = (type: string) => {
@@ -89,20 +122,45 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
       case 'openLocalFile':
         onHandleImportJson();
         break;
+      case 'downloadPng':
+        if (meta2d.isEmptyData()) {
+          message.warning('暂无面板数据');
+          return;
+        }
+        meta2d.downloadPng('meta2D.png');
+      case 'downloadSvg':
+        onHandleSaveToSvg();
+        break;
       default:
         break;
     }
   };
-  const items: MenuProps['items'] = FILE_LIST;
 
   const _handleMenuClick: MenuProps['onClick'] = (e) => {
     _handleOp(e.key);
   };
 
+  const renderIcon = (item: any) => {
+    if (item.showValue) {
+      switch (item.toolKey) {
+        case 'xiankuan':
+          return (
+            <span className={styles.topItem__value}>{state.lineWidth}</span>
+          );
+        default:
+          break;
+      }
+    }
+    return <i className={`t-icon t-${item.toolKey}`} />;
+  };
+
   return (
     <header className={styles.header}>
-      <div className={styles.header__left}>
-        {TOOL_LIST_LEFT.map((item) => {
+      <div className={styles.header__middle}>
+        {TOOL_LIST.map((item) => {
+          if (item.isSplit) {
+            return <div className={styles.header__middle__split} />;
+          }
           const comp = (
             <div
               key={item.toolKey}
@@ -113,17 +171,62 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
                 }
                 _handleOp(item.toolKey);
               }}
+              data-toolKey={item.toolKey}
               className={`${styles.header__middle__item}`}
+              data-isDivider={item.toolKey.includes('divider_T')}
             >
-              <i className={`t-icon t-${item.toolKey}`} />
+              <div className={styles.topItem}>
+                {renderIcon(item)}
+                {(item.dropdown && (
+                  <i
+                    className={`t-icon t-triangle-down`}
+                    style={{ fontSize: '10px' }}
+                  />
+                )) ||
+                  null}
+              </div>
               <span className={styles.itemName}>{item.name}</span>
             </div>
           );
-          if (item.toolKey === 'folder') {
+          if (item.dropdown) {
+            const { items, type } = item.dropdown;
+            const dealItems = items?.map((i) => ({ ...i, key: item.toolKey }));
+            const dropDownObj = {};
+            if (type === 'menu') {
+              Object.assign(dropDownObj, {
+                menu: {
+                  items: dealItems,
+                  onClick: _handleMenuClick,
+                },
+              });
+            } else if (type === 'input') {
+              Object.assign(dropDownObj, {
+                dropdownRender: () => {
+                  return (
+                    <div className={styles.dropdown__renderInput} v>
+                      <InputNumber
+                        value={state.lineWidth}
+                        step={1}
+                        min={1}
+                        onChange={(value: number | null) => {
+                          // meta2d.setOptions({
+                          //   linew
+                          // })
+                          setState({ lineWidth: value });
+                        }}
+                      />
+                    </div>
+                  );
+                },
+              });
+            }
             return (
               <Dropdown
-                menu={{ items, onClick: _handleMenuClick }}
-                overlayClassName={styles.fileDropdown}
+                overlayClassName={`${styles.dropdown} ${
+                  item.dropdown.hasDivider ? styles.hasDivider : ''
+                }`}
+                {...dropDownObj}
+                data-dropKey={item.toolKey}
               >
                 {comp}
               </Dropdown>
@@ -132,25 +235,6 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
           return comp;
         })}
       </div>
-      <div className={styles.header__middle}>
-        {TOOL_LIST.map((item) => {
-          return (
-            <div
-              className={`${styles.header__middle__item} ${
-                item.toolKey === state.activeToolKey
-                  ? styles.header__middle__item__active
-                  : ''
-              }`}
-              key={item.toolKey}
-              onClick={() => _handleOp(item.toolKey)}
-            >
-              <i className={`t-icon t-${item.toolKey}`} />
-              <span className={styles.itemName}>{item.name}</span>
-            </div>
-          );
-        })}
-      </div>
-      <div className={styles.header__right}></div>
     </header>
   );
 };

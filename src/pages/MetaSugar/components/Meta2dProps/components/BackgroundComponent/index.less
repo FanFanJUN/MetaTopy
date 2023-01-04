@@ -1,0 +1,26 @@
+.backgroundComponent {
+  height: 100%;
+  .tab {
+    height: 52px;
+    padding: 20px 0 0 16px;
+    display: flex;
+    border-bottom: 1px solid #e5dfdf;
+    .tabItem {
+      margin-right: 16px;
+      position: relative;
+      &.tabItem__active {
+        color: #1890ff;
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 100%;
+          height: 2px;
+          background: #1890ff;
+          transform: translateX(-50%);
+        }
+      }
+    }
+  }
+}

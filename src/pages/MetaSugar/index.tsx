@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Header, LeftMaterial, Meta2dProps } from './components';
-import { MetaContext } from './context';
+import { IMeta, MetaContext } from './context';
 import { MainMeta } from './Meta2dContainer';
 import styles from './index.less';
 import { Meta2d } from '@meta2d/core';
 import { useSetState } from 'ahooks';
+import { setFunMeta2D } from './hepler';
 
 const App = () => {
-  const [meta2d, setMeta] = useState<Meta2d>();
+  const [meta2d, setMeta] = useState<IMeta>();
   const [state, setState] = useSetState({
     selected: false,
     selectedData: {},
@@ -54,6 +55,7 @@ const App = () => {
         rule: true,
       });
       meta2d.on('*', onMessage); // 监听所有事件
+      setFunMeta2D(meta2d);
       meta2d.resize();
     }
     return () => {

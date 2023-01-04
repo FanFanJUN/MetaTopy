@@ -17,6 +17,10 @@
     flex: 1 0 50%;
     display: flex;
     justify-content: center;
+    padding: 0 30px;
+    &__split {
+      flex: 1 1 90px;
+    }
     &__item {
       display: flex;
       cursor: pointer;
@@ -24,6 +28,7 @@
       align-items: center;
       margin-right: 30px;
       .itemName {
+        white-space: nowrap;
         height: 18px;
         font-size: 13px;
         font-weight: 400;
@@ -38,20 +43,50 @@
       &__active {
         color: rgb(24, 144, 255);
       }
+      .topItem {
+        display: flex;
+        align-items: center;
+        &__value {
+          width: auto;
+          height: 28px;
+          line-height: 28px;
+        }
+      }
     }
   }
   &__right {
     flex: 1 0 10%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 100%;
   }
 }
 
-.fileDropdown {
+.dropdown {
+  &.hasDivider {
+    ul > li {
+      &:nth-child(3) {
+        padding: 0;
+        height: auto;
+      }
+    }
+  }
   ul > li {
-    padding: 5px 12px 5px 28px;
+    padding: 5px 12px 5px 12px;
     height: 40px;
     &:hover {
       background: #1890ff;
       color: #fff;
+    }
+  }
+  &__renderInput {
+    min-width: 220px;
+    padding: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px #0000004d;
+    [class~='ant-input-number'] {
+      width: 100%;
     }
   }
 }
