@@ -21,7 +21,6 @@ const App = () => {
    * @params {object} data - 节点数据
    */
   const onMessage = (event: any, data: any) => {
-    console.log(event, data);
     switch (event) {
       case 'active':
         // 选中

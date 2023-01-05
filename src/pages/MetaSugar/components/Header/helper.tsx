@@ -123,6 +123,14 @@ export const TOOL_LIST = [
           ),
           key: 'core',
         },
+        {
+          label: (
+            <a href="https://t.le5le.com/" target="_blank">
+              产品
+            </a>
+          ),
+          key: 'product',
+        },
       ],
     },
   },
