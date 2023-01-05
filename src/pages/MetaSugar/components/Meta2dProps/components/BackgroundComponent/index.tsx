@@ -47,93 +47,107 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
     meta2d.resize();
     update();
   };
-
   const _renderCanvas = () => {
     const data = meta2d?.data();
     const option = meta2d?.getOptions();
     return (
-      <div className={styles.content__item}>
-        <header>
-          画布
-          <RightOutlined
+      <>
+        <div className={styles.content__item}>
+          <header>
+            画布
+            <RightOutlined
+              style={{
+                cursor: 'pointer',
+                transform: state.expandKeys.includes('canvas')
+                  ? 'rotate(90deg)'
+                  : 'rotate(00deg)',
+                transition: 'transform .3s',
+              }}
+              onClick={() => {
+                setState({
+                  expandKeys: state.expandKeys.includes('canvas')
+                    ? []
+                    : ['canvas'],
+                });
+              }}
+            />
+          </header>
+          <section
             style={{
-              cursor: 'pointer',
-              transform: state.expandKeys.includes('canvas')
-                ? 'rotate(90deg)'
-                : 'rotate(00deg)',
-              transition: 'transform .3s',
+              display: state.expandKeys.includes('canvas') ? '' : 'none',
+              transition: 'display .3s',
             }}
-            onClick={() => {
-              setState({
-                expandKeys: state.expandKeys.includes('canvas')
-                  ? []
-                  : ['canvas'],
-              });
-            }}
-          />
-        </header>
-        <section
-          style={{
-            display: state.expandKeys.includes('canvas') ? '' : 'none',
-            transition: 'display .3s',
-          }}
-        >
-          <div className={styles.content__item__pro}>
-            <span>默认颜色</span>
-            <ColorPicker
-              value={option?.color}
-              onChange={(color?: string | undefined) =>
-                _handleChange('color', color, undefined)
-              }
-            />
-          </div>
-          <div className={styles.content__item__pro}>
-            <span>背景网格</span>
-            <Switch
-              checked={data?.grid ?? false}
-              onChange={(checked: boolean) =>
-                _handleChange('grid', null, checked)
-              }
-            />
-          </div>
-          <div className={styles.content__item__pro}>
-            <span>网格颜色</span>
-            <ColorPicker
-              value={option?.gridColor}
-              onChange={(color?: string | undefined) =>
-                _handleChange('gridColor', color, undefined)
-              }
-            />
-          </div>
-          <div className={styles.content__item__pro}>
-            <span>标尺</span>
-            <Switch
-              checked={option?.rule ?? false}
-              onChange={(checked: boolean) =>
-                _handleChange('rule', null, checked)
-              }
-            />
-          </div>
-          <div className={styles.content__item__pro}>
-            <span>标尺颜色</span>
-            <ColorPicker
-              value={option?.ruleColor}
-              onChange={(color?: string | undefined) =>
-                _handleChange('ruleColor', color, undefined)
-              }
-            />
-          </div>
-          <div className={styles.content__item__pro}>
-            <span>背景颜色</span>
-            <ColorPicker
-              value={option?.background}
-              onChange={(color?: string | undefined) =>
-                _handleChange('background', color, undefined)
-              }
-            />
-          </div>
-        </section>
-      </div>
+          >
+            <div className={styles.content__item__pro}>
+              <span>默认颜色</span>
+              <ColorPicker
+                value={option?.color}
+                onChange={(color?: string | undefined) =>
+                  _handleChange('color', color, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>背景网格</span>
+              <Switch
+                checked={data?.grid ?? false}
+                onChange={(checked: boolean) =>
+                  _handleChange('grid', null, checked)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>网格颜色</span>
+              <ColorPicker
+                value={option?.gridColor}
+                onChange={(color?: string | undefined) =>
+                  _handleChange('gridColor', color, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>标尺</span>
+              <Switch
+                checked={option?.rule ?? false}
+                onChange={(checked: boolean) =>
+                  _handleChange('rule', null, checked)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>标尺颜色</span>
+              <ColorPicker
+                value={option?.ruleColor}
+                onChange={(color?: string | undefined) =>
+                  _handleChange('ruleColor', color, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>背景颜色</span>
+              <ColorPicker
+                value={option?.background}
+                onChange={(color?: string | undefined) =>
+                  _handleChange('background', color, undefined)
+                }
+              />
+            </div>
+          </section>
+        </div>
+        <div className={styles.content__item}>
+          <header>快捷键</header>
+          <section className={styles.keyBor}>
+            <ul>
+              <li>← ↑ → ↓ ：移动5个像素</li>
+              <li>Ctrl + 鼠标点击：多选</li>
+              <li>Ctrl + 鼠标滚轮：缩放画布</li>
+              <li>Ctrl + ← ↑ → ↓ ：移动1个像素</li>
+              <li>Ctrl + 鼠标拖拽空白：移动整个画布</li>
+              <li>Shift/Alt + 鼠标拖拽节点：独立拖拽（子）节点</li>
+            </ul>
+          </section>
+        </div>
+      </>
     );
   };
 
