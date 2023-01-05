@@ -21,6 +21,7 @@ const App = () => {
    * @params {object} data - 节点数据
    */
   const onMessage = (event: any, data: any) => {
+    console.log(event, data);
     switch (event) {
       case 'active':
         // 选中
@@ -42,6 +43,13 @@ const App = () => {
           multiData: [],
           selectedData: {},
         });
+      case 'opened':
+        setState({
+          type: 'default',
+          selected: false,
+          multiData: [],
+          selectedData: {},
+        });
       default:
         break;
     }
@@ -50,9 +58,9 @@ const App = () => {
   useEffect(() => {
     if (meta2d) {
       meta2d.setOptions({
-        grid: true,
-        // background: '#222629',
+        background: '#222629',
         rule: true,
+        color: '#278df8',
       });
       meta2d.on('*', onMessage); // 监听所有事件
       setFunMeta2D(meta2d);

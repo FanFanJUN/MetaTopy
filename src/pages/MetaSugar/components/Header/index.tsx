@@ -190,12 +190,11 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
           );
           if (item.dropdown) {
             const { items, type } = item.dropdown;
-            const dealItems = items?.map((i) => ({ ...i, key: item.toolKey }));
             const dropDownObj = {};
             if (type === 'menu') {
               Object.assign(dropDownObj, {
                 menu: {
-                  items: dealItems,
+                  items,
                   onClick: _handleMenuClick,
                 },
               });
