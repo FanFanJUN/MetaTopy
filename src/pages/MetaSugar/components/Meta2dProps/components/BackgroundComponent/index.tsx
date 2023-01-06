@@ -1,12 +1,20 @@
 import { useMeta } from '@/pages/MetaSugar/context';
 import { useDeepCompareEffect, useSetState, useUpdate } from 'ahooks';
-import { Switch } from 'antd';
+import { InputNumber, Switch } from 'antd';
 import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { TAB_LIST } from './helper';
 import styles from './index.less';
-import { RightOutlined } from '@ant-design/icons';
+import {
+  RightOutlined,
+  LineChartOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+  LockOutlined,
+  UnlockOutlined,
+} from '@ant-design/icons';
 import ColorPicker from '@/pages/component/ColorPicker';
+import { Pen } from '@meta2d/core';
 interface IAppProps {}
 
 const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
@@ -28,6 +36,11 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
           grid: checked,
         });
         break;
+      case 'gridRotate':
+        meta2d.setGrid({
+          gridRotate: value,
+        });
+        break;
       case 'rule':
         meta2d.setOptions({
           rule: checked,
@@ -37,6 +50,7 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
       case 'gridColor':
       case 'color':
       case 'ruleColor':
+      case 'gridSize':
         meta2d.setOptions({
           [type]: value,
         });
@@ -106,6 +120,24 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
               />
             </div>
             <div className={styles.content__item__pro}>
+              <span>网格大小</span>
+              <InputNumber
+                value={option?.gridSize}
+                onChange={(gridSize?: string | undefined) =>
+                  _handleChange('gridSize', gridSize, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>网格角度</span>
+              <InputNumber
+                value={data?.gridRotate}
+                onChange={(gridRotate?: string | undefined) =>
+                  _handleChange('gridRotate', gridRotate, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
               <span>标尺</span>
               <Switch
                 checked={option?.rule ?? false}
@@ -151,10 +183,70 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
     );
   };
 
+  const _setValue = (type: Pen, item: Pen) => {
+    meta2d.setValue({
+      id: item.id,
+      [type]: !(type === 'lock' ? item?.[type] ?? false : item?.[type] ?? true),
+    });
+    meta2d.render();
+    update();
+  };
+
+  const _renderStructure = () => {
+    const pens = meta2d.data().pens;
+    if (pens.length) {
+      return (
+        <div className={styles.structureWrap}>
+          {pens.map((item) => {
+            return (
+              <div
+                key={item.id}
+                className={styles.structureWrap__item}
+                style={{
+                  color: item.visible ?? true ? '' : '#bfbfbf',
+                }}
+              >
+                <div className={styles.structureWrap__item__left}>
+                  <LineChartOutlined />
+                  <span onClick={() => {}} style={{ cursor: 'pointer' }}>
+                    {item.name}
+                  </span>
+                </div>
+                <div className={styles.structureWrap__item__right}>
+                  <span
+                    onClick={() => {
+                      _setValue('locked', item);
+                    }}
+                  >
+                    {item.locked ? <LockOutlined /> : <UnlockOutlined />}
+                  </span>
+                  <span
+                    onClick={() => {
+                      _setValue('visible', item);
+                    }}
+                  >
+                    {item.visible ?? true ? (
+                      <EyeOutlined />
+                    ) : (
+                      <EyeInvisibleOutlined />
+                    )}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    return <></>;
+  };
+
   const _renderContent = () => {
     switch (state.activeTab) {
       case 'canvas':
         return _renderCanvas();
+      case 'structure':
+        return _renderStructure();
       default:
         break;
     }

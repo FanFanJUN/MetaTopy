@@ -2,17 +2,90 @@
   height: calc(100vh - 50px);
   width: 200px;
   border-right: 1px solid #ddd;
-  &__list {
+  display: flex;
+  flex-direction: column;
+  &__tab {
     display: flex;
-    padding: 4px 16px 16px;
-    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 16px 16px 0;
+    border-bottom: 1px solid #e5dfdf;
     &__item {
-      flex: 1 0 25%;
-      display: flex;
-      align-items: center;
+      position: relative;
       cursor: pointer;
-      i {
-        font-size: 25px;
+      &[data-isactive='true'] {
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 100%;
+          height: 2px;
+          background: #1890ff;
+          transform: translateX(-50%);
+        }
+        & > p {
+          font-weight: 500;
+          color: #171b27;
+        }
+      }
+      p {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        color: #7f838c;
+      }
+    }
+  }
+  &__content {
+    display: flex;
+    flex: 1;
+    &__system {
+      flex: 1;
+      display: flex;
+      padding-top: 10px;
+      flex-direction: column;
+      .iconTabList {
+        flex: 1;
+        &__item {
+          &__list {
+            display: flex;
+            padding: 4px 16px 16px;
+            flex-wrap: wrap;
+            &__item {
+              flex: 0 0 25%;
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+              i {
+                font-size: 25px;
+              }
+            }
+          }
+        }
+      }
+      .iconButton {
+        &__inner {
+          cursor: pointer;
+          [class~='anticon-appstore-add'] {
+            margin-right: 4px;
+          }
+          width: 170px;
+          height: 30px;
+          border-radius: 1px;
+          color: #434343;
+          opacity: 0.9;
+          font-size: 15px;
+          border: 1px solid #e5e5e5;
+          line-height: 30px;
+          text-align: center;
+        }
+        width: 100%;
+        height: 54px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #e5e5e5;
+        background: white;
       }
     }
   }

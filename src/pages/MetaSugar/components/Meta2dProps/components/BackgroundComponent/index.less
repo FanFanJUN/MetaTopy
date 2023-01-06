@@ -25,8 +25,17 @@
   }
   .content {
     padding: 8px 16px;
-    border-bottom: 1px solid #d9d9d9;
     &__item {
+      position: relative;
+      &::after {
+        content: '';
+        border-bottom: 1px solid #d9d9d9;
+        width: 240px;
+        height: 0;
+        left: -17px;
+        position: absolute;
+        z-index: 2;
+      }
       header {
         display: flex;
         justify-content: space-between;
@@ -40,6 +49,16 @@
         [class='el-color-picker'] {
           [class~='el-color-dropdown'] {
             right: 0;
+          }
+        }
+        [class~='ant-input-number'] {
+          width: 125px;
+          border: 1px solid transparent;
+          &[class~='ant-input-number-focused'] {
+            box-shadow: none;
+          }
+          &:hover {
+            border-color: #1890ff;
           }
         }
         & > span {
@@ -58,6 +77,29 @@
           padding-left: 16px;
           font-size: 13px;
           margin-bottom: 0;
+        }
+      }
+    }
+    .structureWrap {
+      display: flex;
+      flex-direction: column;
+      &__item {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        &:hover {
+          color: #1890ff;
+        }
+        &__left {
+          span {
+            margin-right: 8px;
+          }
+        }
+        &__right {
+          span {
+            cursor: pointer;
+            margin-left: 4px;
+          }
         }
       }
     }
