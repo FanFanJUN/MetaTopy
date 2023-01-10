@@ -40,12 +40,15 @@
     display: flex;
     flex: 1;
     &__system {
-      flex: 1;
+      flex: 1 1;
       display: flex;
       padding-top: 10px;
       flex-direction: column;
+      overflow: auto;
+      max-height: calc(100vh - 99px);
       .iconTabList {
         flex: 1;
+        overflow: auto;
         &__item {
           &__list {
             display: flex;

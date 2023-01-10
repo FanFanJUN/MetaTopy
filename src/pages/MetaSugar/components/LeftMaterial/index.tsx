@@ -74,6 +74,7 @@ const LeftMaterial = () => {
                       <div
                         key={key}
                         className={styles.iconTabList__item__list__item}
+                        title={icon.title}
                       >
                         <i
                           draggable

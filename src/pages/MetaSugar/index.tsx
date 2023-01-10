@@ -3,9 +3,18 @@ import { Header, LeftMaterial, Meta2dProps } from './components';
 import { IMeta, MetaContext } from './context';
 import { MainMeta } from './Meta2dContainer';
 import styles from './index.less';
-import { Meta2d } from '@meta2d/core';
 import { useSetState } from 'ahooks';
 import { setFunMeta2D } from './hepler';
+import { flowPens } from '@meta2d/flow-diagram';
+import { activityDiagram } from '@meta2d/activity-diagram';
+import { classPens } from '@meta2d/class-diagram';
+import { sequencePens, sequencePensbyCtx } from '@meta2d/sequence-diagram';
+import { formPens } from '@meta2d/form-diagram';
+import {
+  register as registerEcharts,
+  registerHighcharts,
+  registerLightningChart,
+} from '@meta2d/chart-diagram';
 
 const App = () => {
   const [meta2d, setMeta] = useState<IMeta>();
@@ -56,6 +65,16 @@ const App = () => {
 
   useEffect(() => {
     if (meta2d) {
+      // 组件注册
+      meta2d.register(activityDiagram());
+      meta2d.register(classPens());
+      meta2d.register(sequencePens());
+      meta2d.registerCanvasDraw(sequencePensbyCtx());
+      meta2d.registerCanvasDraw(formPens());
+      meta2d.register(flowPens());
+      registerEcharts();
+      registerHighcharts();
+      registerLightningChart();
       meta2d.setOptions({
         background: '#222629',
         rule: true,
