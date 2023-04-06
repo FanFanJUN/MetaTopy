@@ -6,6 +6,8 @@ import { TOOL_LIST } from './helper';
 import styles from './index.less';
 import * as FileSaver from 'file-saver';
 import _ from 'lodash';
+import { parseSvg } from '@meta2d/svg';
+import { deepClone } from '@meta2d/core';
 
 interface IHeaderProps {}
 
@@ -26,6 +28,16 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         reader.onload = (e) => {
           const text = e.target.result + '';
           try {
+            if (text.indexOf('<svg') === 0) {
+              // @ts-ignore
+              const pens = parseSvg(text);
+              // @ts-ignore
+              if (meta2d) {
+                // @ts-ignore
+                meta2d.canvas.addCaches = deepClone(pens);
+                message.success('svg转换成功，请点击画布决定放置位置');
+              }
+            }
             const data = JSON.parse(text);
             meta2d.open(data);
           } catch (e) {
@@ -131,6 +143,8 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
       case 'downloadSvg':
         onHandleSaveToSvg();
         break;
+      case 'fitView':
+        meta2d.fitView();
       default:
         break;
     }
@@ -141,12 +155,14 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
   };
 
   const renderIcon = (item: any) => {
-    if (item.showValue) {
+    if (item.oComp) {
       switch (item.toolKey) {
         case 'xiankuan':
           return (
             <span className={styles.topItem__value}>{state.lineWidth}</span>
           );
+        case 'fitView':
+          return <div className={styles[`topItem__${item.toolKey}`]} />;
         default:
           break;
       }

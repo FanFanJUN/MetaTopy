@@ -84,7 +84,7 @@ export const TOOL_LIST = [
     dropdown: {
       type: 'input',
     },
-    showValue: true,
+    oComp: true,
   },
   {
     name: '自动描点',
@@ -93,6 +93,11 @@ export const TOOL_LIST = [
   {
     name: '禁用描点',
     toolKey: 'jinzhimiaodian',
+  },
+  {
+    name: '自适应',
+    toolKey: 'fitView',
+    oComp: true,
   },
   {
     isSplit: true,

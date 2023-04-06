@@ -51,6 +51,23 @@
           height: 28px;
           line-height: 28px;
         }
+        &__fitView {
+          width: 15px;
+          height: 15px;
+          position: relative;
+          border: 1px solid #706a6a;
+          margin: 7px 0px 5px;
+          &::after {
+            content: '';
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            border: 1px solid #706a6a;
+          }
+        }
       }
     }
   }

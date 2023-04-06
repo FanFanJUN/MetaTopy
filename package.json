@@ -30,6 +30,7 @@
     "@meta2d/form-diagram": "^1.0.0",
     "@meta2d/le5le-charts": "^1.0.0",
     "@meta2d/sequence-diagram": "^1.0.0",
+    "@meta2d/svg": "^1.0.2",
     "ahooks": "^3.7.4",
     "antd": "^4.24.7",
     "element-react": "^1.4.34",
