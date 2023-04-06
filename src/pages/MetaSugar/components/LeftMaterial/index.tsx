@@ -36,6 +36,7 @@ const LeftMaterial = () => {
                     justifyContent: 'space-between',
                     display: 'flex',
                     alignItems: 'center',
+                    marginBottom: '10px',
                   }}
                 >
                   <div>

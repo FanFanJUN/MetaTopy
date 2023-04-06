@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { BackgroundComponent } from './components';
+import { BackgroundComponent, NodeComponent } from './components';
 import styles from './index.less';
 
 interface IMeta2dPropsProps {
@@ -14,7 +14,7 @@ const Meta2dProps: React.FunctionComponent<IMeta2dPropsProps> = (props) => {
   const _renderComp = useMemo(() => {
     switch (type) {
       case 'node':
-        return <h1>node</h1>;
+        return <NodeComponent />;
       case 'line':
         return <h1>line</h1>;
       case 'multi':

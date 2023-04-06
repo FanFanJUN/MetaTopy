@@ -31,6 +31,15 @@ const App = () => {
    * @params {object} data - 节点数据
    */
   const onMessage = (event: any, data: any) => {
+    if (data.length === 0) {
+      setState({
+        type: 'default',
+        selected: false,
+        multiData: [],
+        selectedData: {},
+      });
+      return;
+    }
     switch (event) {
       case 'active':
         // 选中
@@ -100,8 +109,11 @@ const App = () => {
       <div className={styles.home}>
         <Header />
         <div className={styles.home__container}>
+          {/* 左侧画布pen */}
           <LeftMaterial />
+          {/* 画布 */}
           <MainMeta onComplete={setMeta} />
+          {/* 左侧画布、pen配置 */}
           <Meta2dProps {...state} />
         </div>
       </div>
