@@ -15,6 +15,7 @@ import {
   registerHighcharts,
   registerLightningChart,
 } from '@meta2d/chart-diagram';
+import { chartsPens } from '@meta2d/le5le-charts';
 
 const App = () => {
   const [meta2d, setMeta] = useState<IMeta>();
@@ -66,15 +67,16 @@ const App = () => {
   useEffect(() => {
     if (meta2d) {
       // 组件注册
+      registerEcharts();
+      registerHighcharts();
+      registerLightningChart();
+      meta2d.registerCanvasDraw(chartsPens());
       meta2d.register(activityDiagram());
       meta2d.register(classPens());
       meta2d.register(sequencePens());
       meta2d.registerCanvasDraw(sequencePensbyCtx());
       meta2d.registerCanvasDraw(formPens());
       meta2d.register(flowPens());
-      registerEcharts();
-      registerHighcharts();
-      registerLightningChart();
       meta2d.setOptions({
         background: '#222629',
         rule: true,

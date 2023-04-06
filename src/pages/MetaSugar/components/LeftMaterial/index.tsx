@@ -2,12 +2,13 @@ import {
   AppstoreAddOutlined,
   ArrowDownOutlined,
   ArrowRightOutlined,
-  ArrowUpOutlined,
   FolderOpenOutlined,
 } from '@ant-design/icons';
 import { useSetState } from 'ahooks';
 import _ from 'lodash';
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
+import { useMeta } from '../../context';
+import { dragEventResolve } from './crossDrag';
 import { ICON_TAB } from './data';
 import { TAB_LIST } from './helper';
 import styles from './index.less';
@@ -17,9 +18,9 @@ const LeftMaterial = () => {
     activeTab: 'system',
     expandKeys: _.map(ICON_TAB, 'key'),
   });
-  const onDragStart = useCallback((e, data) => {
-    e.dataTransfer.setData('Meta2d', JSON.stringify(data));
-  }, []);
+  const { meta2d } = useMeta();
+
+  useEffect(() => {}, [meta2d]);
 
   const _renderList = () => {
     return (
@@ -77,10 +78,9 @@ const LeftMaterial = () => {
                         title={icon.title}
                       >
                         <i
-                          draggable
                           className={`${item.fontFamily} ${key}`}
                           title={title}
-                          onDragStart={(e) => onDragStart(e, data)}
+                          {...dragEventResolve(meta2d, data)}
                         ></i>
                       </div>
                     );
