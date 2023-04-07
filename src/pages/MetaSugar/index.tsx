@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Header, LeftMaterial, Meta2dProps } from './components';
 import { IMeta, MetaContext } from './context';
-import { MainMeta } from './Meta2dContainer';
+import { MainMeta } from './container';
 import styles from './index.less';
 import { useSetState } from 'ahooks';
 import { setFunMeta2D } from './hepler';
@@ -31,7 +31,7 @@ const App = () => {
    * @params {object} data - 节点数据
    */
   const onMessage = (event: any, data: any) => {
-    if (data.length === 0) {
+    if (data?.length === 0) {
       setState({
         type: 'default',
         selected: false,
@@ -43,7 +43,7 @@ const App = () => {
     switch (event) {
       case 'active':
         // 选中
-        if (data && data.length === 1) {
+        if (data && data?.length === 1) {
           const { name } = data[0];
           if (name == 'line') {
             setState({ type: 'line', selected: true, selectedData: data[0] });
