@@ -198,7 +198,6 @@ function RightClickFloat(props) {
         style={{
           top: bounds?.y || 0,
           left: bounds?.x || 0,
-          transform: `${isTranslateY}`,
         }}
       >
         {float.map((f: FloatMenuProps, i) => {
