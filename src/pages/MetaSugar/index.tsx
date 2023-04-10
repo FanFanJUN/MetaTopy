@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Header, LeftMaterial, Meta2dProps } from './components';
+import { Header, LeftMaterial, Meta2dProps, RightClick } from './components';
 import { IMeta, MetaContext } from './context';
 import { MainMeta } from './container';
 import styles from './index.less';
