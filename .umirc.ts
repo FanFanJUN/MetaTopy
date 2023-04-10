@@ -4,7 +4,10 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [{ path: '/', component: './MetaSugar' }],
+  routes: [
+    { path: '/', component: './MetaSugar' },
+    { path: '/rightClick', component: './RightClick' },
+  ],
   fastRefresh: {},
   links: [
     {
