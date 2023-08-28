@@ -43,7 +43,6 @@ export default function ColorPicker(props: IColorProps) {
     <section className={styles.selectwrap}>
       <Input
         size={size}
-        readOnly
         value={value}
         onChange={(e) => handleChange({ hex: e.target.value })}
         placeholder={placeholder}

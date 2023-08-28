@@ -30,4 +30,7 @@ export default defineConfig({
     },
   ],
   scripts: [{ src: `/canvas2svg.js` }],
+  history: {
+    type: 'hash',
+  },
 });

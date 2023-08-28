@@ -12,7 +12,18 @@
   height: calc(100vh - 50px);
   width: calc(100vw - 440px);
   flex-shrink: 0;
+  position: relative;
   .meta2d {
-    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    background: transparent;
+    &[data-mark='move'] {
+      display: block;
+    }
   }
 }

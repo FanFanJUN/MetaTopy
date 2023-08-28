@@ -16,6 +16,7 @@ import {
   registerLightningChart,
 } from '@meta2d/chart-diagram';
 import { chartsPens } from '@meta2d/le5le-charts';
+import { Modal, message } from 'antd';
 
 const App = () => {
   const [meta2d, setMeta] = useState<IMeta>();
@@ -68,6 +69,9 @@ const App = () => {
           multiData: [],
           selectedData: {},
         });
+        break;
+      case 'translate':
+        break;
       default:
         break;
     }
