@@ -7,6 +7,7 @@ export default defineConfig({
   routes: [
     { path: '/', component: './MetaSugar' },
     { path: '/rightClick', component: './RightClick' },
+    { path: '/preview', component: '@/pages/MetaSugar/Preview.tsx' },
   ],
   fastRefresh: {},
   links: [

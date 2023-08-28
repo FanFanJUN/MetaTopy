@@ -194,3 +194,8 @@ export const TOOL_LIST = [
     },
   },
 ];
+
+export let previewData: undefined | Record<any, any> = undefined;
+export const savePreviewData = (data: undefined | object) => {
+  previewData = data;
+};

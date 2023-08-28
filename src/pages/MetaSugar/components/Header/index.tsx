@@ -2,12 +2,13 @@ import { useSetState } from 'ahooks';
 import { Dropdown, Input, InputNumber, MenuProps, message } from 'antd';
 import React from 'react';
 import { useMeta } from '../../context';
-import { TOOL_LIST } from './helper';
+import { TOOL_LIST, savePreviewData } from './helper';
 import styles from './index.less';
 import * as FileSaver from 'file-saver';
 import _ from 'lodash';
 import { parseSvg } from '@meta2d/svg';
 import { deepClone } from '@meta2d/core';
+import { history } from 'umi';
 
 interface IHeaderProps {}
 
@@ -145,6 +146,11 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         break;
       case 'fitView':
         meta2d.fitView();
+        break;
+      case 'attention':
+        savePreviewData(meta2d.store.data);
+        history.push('preview');
+        break;
       default:
         break;
     }

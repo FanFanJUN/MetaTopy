@@ -40,12 +40,10 @@ export const containerDragResolve = (meta2d: IMeta) => {
       e.preventDefault();
     },
     onDrop: (e: DragEvent<HTMLDivElement>) => {
-      console.log('eee', meta2d, currentDrag);
       // 偏移量
       const { x, y, scale } = meta2d.store.data;
       const offsetX = Math.round(e.nativeEvent.offsetX) - x;
       const offsetY = Math.round(e.nativeEvent.offsetY) - y;
-      console.log(offsetX, offsetY);
       const { width, height } = currentDrag;
       Modal.confirm({
         content: 'xxxx',

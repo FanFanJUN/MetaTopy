@@ -4,18 +4,6 @@ import { IMeta, MetaContext } from './context';
 import { MainMeta } from './container';
 import styles from './index.less';
 import { useSetState } from 'ahooks';
-import { setFunMeta2D } from './hepler';
-import { flowPens } from '@meta2d/flow-diagram';
-import { activityDiagram } from '@meta2d/activity-diagram';
-import { classPens } from '@meta2d/class-diagram';
-import { sequencePens, sequencePensbyCtx } from '@meta2d/sequence-diagram';
-import { formPens } from '@meta2d/form-diagram';
-import {
-  register as registerEcharts,
-  registerHighcharts,
-  registerLightningChart,
-} from '@meta2d/chart-diagram';
-import { chartsPens } from '@meta2d/le5le-charts';
 import { Modal, message } from 'antd';
 
 const App = () => {
@@ -77,33 +65,6 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    if (meta2d) {
-      // 组件注册
-      registerEcharts();
-      registerHighcharts();
-      registerLightningChart();
-      meta2d.registerCanvasDraw(chartsPens());
-      meta2d.register(activityDiagram());
-      meta2d.register(classPens());
-      meta2d.register(sequencePens());
-      meta2d.registerCanvasDraw(sequencePensbyCtx());
-      meta2d.registerCanvasDraw(formPens());
-      meta2d.register(flowPens());
-      meta2d.setOptions({
-        background: '#222629',
-        rule: true,
-        color: '#278df8',
-      });
-      meta2d.on('*', onMessage); // 监听所有事件
-      setFunMeta2D(meta2d);
-      meta2d.resize();
-    }
-    return () => {
-      meta2d && meta2d.off('*', onMessage);
-    };
-  }, [meta2d]);
-
   return (
     <MetaContext.Provider
       value={{
@@ -116,7 +77,7 @@ const App = () => {
           {/* 左侧画布pen */}
           <LeftMaterial />
           {/* 画布 */}
-          <MainMeta onComplete={setMeta} />
+          <MainMeta onComplete={setMeta} onMessage={onMessage} />
           {/* 左侧画布、pen配置 */}
           <Meta2dProps {...state} />
         </div>

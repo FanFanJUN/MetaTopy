@@ -10,3 +10,10 @@ export const setFunMeta2D = (meta2d: IMeta) => {
     return _.isEmpty(meta2d.data().pens);
   };
 };
+
+export const preConf = {
+  rule: false,
+  disableScale: true,
+  disableTranslate: true,
+  locked: 1,
+};
