@@ -5,7 +5,14 @@ interface IAppProps {}
 
 const Preview: React.FunctionComponent<IAppProps> = (props) => {
   const _onMessage = () => {};
-  return <MainMeta onMessage={_onMessage} pageType="preview" mateConf={{}} />;
+  return (
+    <MainMeta
+      onMessage={_onMessage}
+      pageType="preview"
+      mateConf={{}}
+      showReturnButton
+    />
+  );
 };
 
 export default Preview;

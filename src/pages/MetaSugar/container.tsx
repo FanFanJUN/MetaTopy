@@ -19,11 +19,18 @@ import { previewData } from './components/Header/helper';
 import { isEmpty } from 'lodash';
 import { Button } from 'antd';
 import { history } from 'umi';
+import { IMeta } from './context';
 
 export const MainMeta = (props) => {
-  const { mateConf = {}, onComplete, onMessage, pageType } = props;
+  const {
+    mateConf = {},
+    onComplete,
+    onMessage,
+    pageType,
+    showReturnButton,
+  } = props;
   const [isLoad, setIsLoad] = useState(false);
-  const [meta2d, setState] = useState(null);
+  const [meta2d, setState] = useState<IMeta>(null);
   const isPreView = pageType === 'preview';
   useEffect(() => {
     window.meta2d = new Meta2d('meta2d');
@@ -97,13 +104,21 @@ export const MainMeta = (props) => {
         {/* 右键 */}
       </div>
       {isLoad && <RightClick />}
-      {isPreView && (
-        <Button
-          style={{ position: 'absolute', zIndex: '10000', right: '0' }}
-          onClick={() => history.goBack()}
-        >
-          返回
-        </Button>
+      {isPreView && showReturnButton && (
+        <>
+          <Button
+            style={{ position: 'absolute', zIndex: '10000', right: '0' }}
+            onClick={() => history.goBack()}
+          >
+            返回
+          </Button>
+          <Button
+            style={{ position: 'absolute', zIndex: '10000', right: '100px' }}
+            onClick={() => meta2d.centerView()}
+          >
+            自适应
+          </Button>
+        </>
       )}
     </main>
   );
