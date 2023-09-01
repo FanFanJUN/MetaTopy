@@ -1,7 +1,6 @@
 .nodeWrap {
   height: 100%;
   width: 100%;
-  overflow: auto;
   .tab {
     height: 52px;
     padding: 20px 0 0 16px;
@@ -10,6 +9,7 @@
     .tabItem {
       margin-right: 16px;
       position: relative;
+      white-space: nowrap;
       &.tabItem__active {
         color: #1890ff;
         &::after {
@@ -23,6 +23,25 @@
           transform: translateX(-50%);
         }
       }
+    }
+  }
+  .content {
+    overflow: auto;
+    height: calc(100% - 51px);
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 10px;
+      background: transparent;
+    }
+    &::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ddd;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent !important;
     }
   }
   [class='react-json-view'] {
