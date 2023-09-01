@@ -13,7 +13,6 @@ export const setFunMeta2D = (meta2d: IMeta) => {
 
 export const preConf = {
   rule: false,
-  disableScale: true,
-  disableTranslate: true,
-  locked: 1,
+  disableScale: false,
+  disableTranslate: false,
 };

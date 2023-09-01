@@ -68,12 +68,20 @@ export const MainMeta = (props) => {
       meta2d.on('*', onMessage); // 监听所有事件
       setFunMeta2D(meta2d);
       const pens = previewData?.pens || [];
-      pens.forEach((item) => {
+      /*  pens.forEach((item) => {
         item.locked = isPreView ? 2 : 0;
-      });
+        item.disableAnchor = isPreView ? true : false;
+        item.disableInput = isPreView ? true : false;
+      }); */
       !isEmpty(previewData);
       meta2d.open({ ...previewData, pens });
+      if (isPreView) {
+        meta2d.lock(1);
+      } else {
+        meta2d.lock(0);
+      }
       meta2d.resize();
+      !isPreView && meta2d.fitView();
     }
     return () => {
       meta2d && meta2d.off('*', onMessage);
@@ -114,7 +122,7 @@ export const MainMeta = (props) => {
           </Button>
           <Button
             style={{ position: 'absolute', zIndex: '10000', right: '100px' }}
-            onClick={() => meta2d.centerView()}
+            onClick={() => meta2d.fitView()}
           >
             自适应
           </Button>

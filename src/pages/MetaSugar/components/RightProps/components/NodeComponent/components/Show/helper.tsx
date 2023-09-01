@@ -12,21 +12,25 @@ export const Show_List = [
         name: 'X',
         toolKey: 'x',
         type: 'inputNumber',
+        isLogic: true,
       },
       {
         name: 'Y',
         toolKey: 'y',
         type: 'inputNumber',
+        isLogic: true,
       },
       {
         name: '宽',
         toolKey: 'width',
         type: 'inputNumber',
+        isLogic: true,
       },
       {
         name: '高',
         toolKey: 'height',
         type: 'inputNumber',
+        isLogic: true,
       },
       {
         name: '圆角',
@@ -95,7 +99,7 @@ export const Show_List = [
       {
         name: '字体颜色',
         toolKey: 'textColor',
-        type: 'switch',
+        type: 'colorPicker',
       },
       {
         name: '隐藏文字',

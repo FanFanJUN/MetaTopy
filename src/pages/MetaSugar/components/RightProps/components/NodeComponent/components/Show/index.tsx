@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './index.less';
 import { Show_List } from './helper';
-import { map } from 'lodash';
+import { map, round } from 'lodash';
 import { ArrowDownOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { Input, InputNumber, Select, Switch } from 'antd';
 import { useMeta } from '@/pages/MetaSugar/context';
@@ -37,12 +37,20 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
 
   const _renderComp = (item: any) => {
     const values = meta2d.store.active?.[0] || {};
+    // 获取逻辑位置  {x,y,width,height})  缩放、平移后，getPenRect不变，但是 pen.x、pen.y等可能会变
+    const calculativeValues = meta2d.getPenRect(values) || {};
     if (item.type === 'inputNumber') {
       return (
         <InputNumber
-          value={values?.[item.toolKey]}
+          value={
+            item.isLogic
+              ? round(calculativeValues?.[item.toolKey], 2)
+              : values?.[item.toolKey]
+          }
           style={{ width: '100%' }}
-          onChange={(value) => _handleChange(value, values, item.toolKey)}
+          onChange={(value) => {
+            _handleChange(value, values, item.toolKey);
+          }}
         />
       );
     } else if (item.type === 'switch') {
