@@ -81,7 +81,7 @@ export const MainMeta = (props) => {
         meta2d.lock(0);
       }
       meta2d.resize();
-      !isPreView && meta2d.fitView();
+      meta2d.fitView();
     }
     return () => {
       meta2d && meta2d.off('*', onMessage);

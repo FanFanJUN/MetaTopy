@@ -40,6 +40,9 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               }
             }
             const data = JSON.parse(text);
+            if (data.topologyData?.main) {
+              data.pens = data.topologyData?.main;
+            }
             meta2d.open(data);
           } catch (e) {
             return false;
