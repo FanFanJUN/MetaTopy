@@ -509,6 +509,34 @@ const icons_chart = [
       keepAnimateState: 0,
     },
   },
+  {
+    key: 't-bar-chart',
+    title: '柱状图-echarts格式',
+    data: {
+      name: 'histogram',
+      width: 400,
+      height: 200,
+      disableAnchor: true,
+      echarts: {
+        option: {
+          color: ['#1890ff'],
+          xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          },
+          yAxis: {
+            type: 'value',
+          },
+          series: [
+            {
+              data: [120, 200, 150, 80, 70, 110, 130],
+              type: 'bar',
+            },
+          ],
+        },
+      },
+    },
+  },
 ];
 
 export const ICON_TAB = [

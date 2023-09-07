@@ -40,8 +40,6 @@ export const MainMeta = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(previewData);
-
     if (meta2d) {
       const options = {
         background: '#222629',
