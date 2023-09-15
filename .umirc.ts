@@ -30,7 +30,10 @@ export default defineConfig({
       href: 'http://at.alicdn.com/t/font_1331132_g7tv7fmj6c9.css', // font-family: "ticon"
     },
   ],
-  scripts: [{ src: `/canvas2svg.js` }],
+  scripts: [
+    { src: `/canvas2svg.js` },
+    'https://cdn.bootcss.com/echarts/4.3.0/echarts.min.js', // 全局echarts实例
+  ],
   history: {
     type: 'hash',
   },

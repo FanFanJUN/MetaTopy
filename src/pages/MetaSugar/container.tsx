@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.less';
 import { RightClick } from './components';
 import { containerDragResolve } from './components/LeftMaterial/crossDrag';
-import { preConf, setFunMeta2D } from './hepler';
+import { PreviewButton, preConf, setFunMeta2D } from './hepler';
 import { flowPens } from '@meta2d/flow-diagram';
 import { activityDiagram } from '@meta2d/activity-diagram';
 import { classPens } from '@meta2d/class-diagram';
@@ -15,11 +15,12 @@ import {
   registerLightningChart,
 } from '@meta2d/chart-diagram';
 import { chartsPens } from '@meta2d/le5le-charts';
-import { previewData } from './components/Header/helper';
+import { previewData, savePreviewData } from './components/Header/helper';
 import { isEmpty } from 'lodash';
 import { Button } from 'antd';
 import { history } from 'umi';
 import { IMeta } from './context';
+import { useSetState } from 'ahooks';
 
 export const MainMeta = (props) => {
   const {
@@ -31,9 +32,16 @@ export const MainMeta = (props) => {
   } = props;
   const [isLoad, setIsLoad] = useState(false);
   const [meta2d, setState] = useState<IMeta>(null);
+  const [state, setAState] = useSetState({
+    templateConf: {
+      isTemple: false,
+      backGround: '#1e2430',
+    },
+  });
   const isPreView = pageType === 'preview';
   useEffect(() => {
     window.meta2d = new Meta2d('meta2d');
+    setFunMeta2D(window.meta2d);
     onComplete && onComplete(window.meta2d);
     setState(window.meta2d);
     setIsLoad(true);
@@ -71,25 +79,66 @@ export const MainMeta = (props) => {
         item.disableAnchor = isPreView ? true : false;
         item.disableInput = isPreView ? true : false;
       }); */
-      !isEmpty(previewData);
-      meta2d.open({ ...previewData, pens });
+      // @ts-ignore
+      if (!isEmpty(previewData)) {
+        meta2d.open({ ...previewData, pens });
+        // 大屏模板
+        if (previewData?.template) {
+          setAState({
+            templateConf: {
+              ...state.templateConf,
+              isTemple: true,
+            },
+          });
+        }
+      }
       if (isPreView) {
         meta2d.lock(1);
       } else {
         meta2d.lock(0);
       }
+      if (meta2d.isScreen()) {
+        meta2d.fitSizeView();
+      } else {
+        meta2d.fitView();
+      }
       meta2d.resize();
-      meta2d.fitView();
     }
     return () => {
       meta2d && meta2d.off('*', onMessage);
     };
   }, [meta2d]);
 
+  const _handleOp = (tKey: string) => {
+    switch (tKey) {
+      case 'back':
+        history.push('/');
+        break;
+      case 'centerView':
+        meta2d.centerView();
+        break;
+      case 'fitView':
+        meta2d.fitView();
+        break;
+      case 'fitSizeView':
+        meta2d.fitSizeView();
+        break;
+      case 'fitTemplateView':
+        meta2d.fitTemplateView();
+        break;
+      default:
+        break;
+    }
+    savePreviewData(meta2d.store.data);
+    meta2d.resize();
+  };
+
   return (
     <main
       className={styles.main}
       id="meta2d"
+      data-isTemp
+      data-isPreview={isPreView}
       style={
         isPreView
           ? {
@@ -110,21 +159,19 @@ export const MainMeta = (props) => {
         {/* 右键 */}
       </div>
       {isLoad && <RightClick />}
-      {isPreView && showReturnButton && (
-        <>
-          <Button
-            style={{ position: 'absolute', zIndex: '10000', right: '0' }}
-            onClick={() => history.goBack()}
-          >
-            返回
-          </Button>
-          <Button
-            style={{ position: 'absolute', zIndex: '10000', right: '100px' }}
-            onClick={() => meta2d.fitView()}
-          >
-            自适应
-          </Button>
-        </>
+      {isPreView && showReturnButton && isLoad && (
+        <div className={styles.buttons}>
+          {PreviewButton(meta2d?.isScreen() ?? false).map((item) => {
+            return (
+              <Button
+                key={item.toolKey}
+                onClick={() => _handleOp(item.toolKey)}
+              >
+                {item.name}
+              </Button>
+            );
+          })}
+        </div>
       )}
     </main>
   );

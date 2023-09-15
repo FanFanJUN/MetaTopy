@@ -26,4 +26,33 @@
       display: block;
     }
   }
+  .buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    z-index: 10000;
+    justify-content: space-between;
+    & > button {
+      margin-right: 18px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  // 大屏背景
+  &[data-isTemp] {
+    & > canvas {
+      &:first-of-type {
+        background: #1e2430;
+      }
+    }
+    &[data-isPreview='true'] {
+      & > canvas {
+        &:first-of-type {
+          background: #0c0c20;
+        }
+      }
+    }
+  }
 }

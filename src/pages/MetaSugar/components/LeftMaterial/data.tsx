@@ -537,6 +537,32 @@ const icons_chart = [
       },
     },
   },
+  {
+    key: 't-bar-chart',
+    title: '柱状图-echarts格式',
+    data: {
+      name: 'echarts',
+      width: 400,
+      height: 200,
+      echarts: {
+        option: {
+          xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          },
+          yAxis: {
+            type: 'value',
+          },
+          series: [
+            {
+              data: [820, 932, 901, 934, 1290, 1330, 1320],
+              type: 'line',
+            },
+          ],
+        },
+      },
+    },
+  },
 ];
 
 export const ICON_TAB = [

@@ -44,6 +44,11 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               data.pens = data.topologyData?.main;
             }
             meta2d.open(data);
+            if (data.isScreen) {
+              meta2d.fitSizeView();
+            } else {
+              meta2d.fitView();
+            }
           } catch (e) {
             return false;
           } finally {
@@ -148,7 +153,11 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         onHandleSaveToSvg();
         break;
       case 'fitView':
-        meta2d.fitView();
+        if (meta2d.isScreen()) {
+          meta2d.fitSizeView();
+        } else {
+          meta2d.fitView();
+        }
         break;
       case 'attention':
         savePreviewData(meta2d.store.data);

@@ -46,7 +46,6 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
           rule: checked,
         });
         break;
-      case 'background':
       case 'gridColor':
       case 'color':
       case 'ruleColor':
@@ -54,6 +53,9 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
         meta2d.setOptions({
           [type]: value,
         });
+        break;
+      case 'background':
+        meta2d.setBackgroundColor(value);
         break;
       default:
         break;
@@ -158,7 +160,7 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
             <div className={styles.content__item__pro}>
               <span>背景颜色</span>
               <ColorPicker
-                value={option?.background}
+                value={data?.background ?? option?.background}
                 onChange={(color?: string | undefined) =>
                   _handleChange('background', color, undefined)
                 }
