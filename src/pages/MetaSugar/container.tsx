@@ -32,12 +32,6 @@ export const MainMeta = (props) => {
   } = props;
   const [isLoad, setIsLoad] = useState(false);
   const [meta2d, setState] = useState<IMeta>(null);
-  const [state, setAState] = useSetState({
-    templateConf: {
-      isTemple: false,
-      backGround: '#1e2430',
-    },
-  });
   const isPreView = pageType === 'preview';
   useEffect(() => {
     window.meta2d = new Meta2d('meta2d');
@@ -82,15 +76,6 @@ export const MainMeta = (props) => {
       // @ts-ignore
       if (!isEmpty(previewData)) {
         meta2d.open({ ...previewData, pens });
-        // 大屏模板
-        if (previewData?.template) {
-          setAState({
-            templateConf: {
-              ...state.templateConf,
-              isTemple: true,
-            },
-          });
-        }
       }
       if (isPreView) {
         meta2d.lock(1);
@@ -137,7 +122,7 @@ export const MainMeta = (props) => {
     <main
       className={styles.main}
       id="meta2d"
-      data-isTemp
+      data-isscreen={meta2d?.isScreen()}
       data-isPreview={isPreView}
       style={
         isPreView
