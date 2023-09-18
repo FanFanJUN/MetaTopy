@@ -160,7 +160,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         }
         break;
       case 'attention':
-        savePreviewData(meta2d.store.data);
+        savePreviewData({ ...meta2d.store.data });
         history.push('preview');
         break;
       default:

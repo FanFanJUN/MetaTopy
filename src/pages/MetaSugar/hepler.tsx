@@ -1,5 +1,5 @@
 import { IMeta } from './context';
-import _ from 'lodash';
+import _, { isNil } from 'lodash';
 
 /**
  * meta2d 拓展方法和属性
@@ -10,7 +10,10 @@ export const setFunMeta2D = (meta2d: IMeta) => {
     return _.isEmpty(meta2d.data().pens);
   };
   meta2d.isScreen = () => {
-    return meta2d.store.data?.isScreen ?? false;
+    return (
+      meta2d.store.data?.isScreen ||
+      (!isNil(meta2d.store.data?.height) && !isNil(meta2d.store.data?.width))
+    );
   };
 };
 

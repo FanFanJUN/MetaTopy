@@ -20,7 +20,7 @@ import { isEmpty } from 'lodash';
 import { Button } from 'antd';
 import { history } from 'umi';
 import { IMeta } from './context';
-import { useSetState } from 'ahooks';
+import { useUpdate } from 'ahooks';
 
 export const MainMeta = (props) => {
   const {
@@ -30,14 +30,17 @@ export const MainMeta = (props) => {
     pageType,
     showReturnButton,
   } = props;
+  const update = useUpdate();
   const [isLoad, setIsLoad] = useState(false);
   const [meta2d, setState] = useState<IMeta>(null);
   const isPreView = pageType === 'preview';
   useEffect(() => {
-    window.meta2d = new Meta2d('meta2d');
-    setFunMeta2D(window.meta2d);
-    onComplete && onComplete(window.meta2d);
-    setState(window.meta2d);
+    // @ts-ignore
+    const metaTopology = new Meta2d('meta2d');
+    window.meta2d = metaTopology;
+    setFunMeta2D(metaTopology);
+    onComplete && onComplete(metaTopology);
+    setState(metaTopology);
     setIsLoad(true);
   }, []);
 
@@ -76,6 +79,7 @@ export const MainMeta = (props) => {
       // @ts-ignore
       if (!isEmpty(previewData)) {
         meta2d.open({ ...previewData, pens });
+        update();
       }
       if (isPreView) {
         meta2d.lock(1);
