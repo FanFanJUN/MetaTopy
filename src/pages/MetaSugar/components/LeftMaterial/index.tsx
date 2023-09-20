@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { useSetState } from 'ahooks';
 import _ from 'lodash';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMeta } from '../../context';
 import { dragEventResolve } from './crossDrag';
 import { ICON_TAB } from './data';
@@ -16,7 +16,10 @@ import styles from './index.less';
 const LeftMaterial = () => {
   const [state, setState] = useSetState({
     activeTab: 'system',
-    expandKeys: _.map(ICON_TAB, 'key'),
+    expandKeys: _.map(
+      _.filter(ICON_TAB, (n) => n.expand),
+      'key',
+    ),
   });
   const { meta2d } = useMeta();
 
@@ -29,7 +32,7 @@ const LeftMaterial = () => {
           {ICON_TAB.map((item) => {
             const isShow = state.expandKeys.includes(item.key);
             return (
-              <div className={styles.iconTabList__item}>
+              <div className={styles.iconTabList__item} key={item.key}>
                 <div
                   style={{
                     padding: '0 20px',

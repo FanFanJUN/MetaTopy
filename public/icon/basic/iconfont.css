@@ -1,0 +1,85 @@
+@font-face {
+    font-family: "iconfont"; /* Project id 1517548 */
+    src: url('font_1517548_fgj6ei5bn1.woff2?t=1633684188848') format('woff2'),
+         url('font_1517548_fgj6ei5bn1.woff?t=1633684188848') format('woff'),
+         url('font_1517548_fgj6ei5bn1.ttf?t=1633684188848') format('truetype');
+  }
+  
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-audio:before {
+    content: "\e695";
+  }
+  
+  .icon-pen:before {
+    content: "\e6d6";
+  }
+  
+  .icon-Pencil:before {
+    content: "\e66e";
+  }
+  
+  .icon-img:before {
+    content: "\e699";
+  }
+  
+  .icon-video:before {
+    content: "\e7da";
+  }
+  
+  .icon-rect:before {
+    content: "\e610";
+  }
+  
+  .icon-triangle:before {
+    content: "\e6a2";
+  }
+  
+  .icon-cloud:before {
+    content: "\e609";
+  }
+  
+  .icon-circle:before {
+    content: "\e64e";
+  }
+  
+  .icon-leftArrow:before {
+    content: "\e641";
+  }
+  
+  .icon-rightArrow:before {
+    content: "\e643";
+  }
+  
+  .icon-twowayArrow:before {
+    content: "\e62e";
+  }
+  
+  .icon-line:before {
+    content: "\e678";
+  }
+  
+  .icon-pentagon:before {
+    content: "\e61a";
+  }
+  
+  .icon-hexagon:before {
+    content: "\ea56";
+  }
+  
+  .icon-diamond:before {
+    content: "\e8f8";
+  }
+  
+  .icon-pentagram:before {
+    content: "\e66f";
+  }
+  
+  x1.00
+  

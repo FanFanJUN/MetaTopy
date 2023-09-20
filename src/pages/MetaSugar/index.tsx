@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Header, LeftMaterial, Meta2dProps, RightClick } from './components';
-import { IMeta, MetaContext } from './context';
-import { MainMeta } from './container';
-import styles from './index.less';
 import { useSetState } from 'ahooks';
-import { Modal, message } from 'antd';
+import { useState } from 'react';
+import { Header, LeftMaterial, Meta2dProps } from './components';
+import { MainMeta } from './container';
+import { IMeta, MetaContext } from './context';
+import styles from './index.less';
 
 const App = () => {
   const [meta2d, setMeta] = useState<IMeta>();

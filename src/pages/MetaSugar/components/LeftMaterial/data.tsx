@@ -1,3 +1,6 @@
+import { LTDX_ICON } from './graphics/ltdx';
+import { SGCC_ICON } from './graphics/sgcc';
+
 export const icons_common = [
   {
     key: 'icon-rect',
@@ -571,12 +574,14 @@ export const ICON_TAB = [
     key: 'commonGraphics',
     list: icons_common,
     fontFamily: 'iconfont',
+    expand: true,
   },
   {
     name: '基本图形',
     key: 'basicGraphics',
     list: icons_basic,
     fontFamily: 't-icon',
+    expand: true,
   },
   {
     name: '脑图',
@@ -621,5 +626,17 @@ export const ICON_TAB = [
     key: 'chart',
     list: icons_chart,
     fontFamily: 't-icon',
+  },
+  {
+    name: '国家电网图标',
+    key: 'sgcc',
+    list: SGCC_ICON,
+    fontFamily: 'sgcc',
+  },
+  {
+    name: '电气工厂常用',
+    key: 'ltdx',
+    list: LTDX_ICON,
+    fontFamily: 'ltdx',
   },
 ];

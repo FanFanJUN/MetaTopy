@@ -15,19 +15,25 @@ export default defineConfig({
       rel: 'stylesheet',
       type: 'text/css',
       charset: 'utf-8',
-      href: 'http://at.alicdn.com/t/font_1517548_fgj6ei5bn1.css',
+      href: '/icon/t-icon/font_2030495_fvd79jmq3oi.css', // font-family: "t-icon"
     },
     {
       rel: 'stylesheet',
       type: 'text/css',
       charset: 'utf-8',
-      href: 'http://at.alicdn.com/t/c/font_2030495_fvd79jmq3oi.css', // font-family: "t-icon"
+      href: '/icon/国家电网/iconfont.css', // 国家电网
     },
     {
       rel: 'stylesheet',
       type: 'text/css',
       charset: 'utf-8',
-      href: 'http://at.alicdn.com/t/font_1331132_g7tv7fmj6c9.css', // font-family: "ticon"
+      href: '/icon/电气工程/iconfont.css', // 电气工程
+    },
+    {
+      rel: 'stylesheet',
+      type: 'text/css',
+      charset: 'utf-8',
+      href: '/icon/basic/iconfont.css', // 通用icon
     },
   ],
   scripts: [

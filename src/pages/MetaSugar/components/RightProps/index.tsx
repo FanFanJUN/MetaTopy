@@ -10,17 +10,17 @@ interface IMeta2dPropsProps {
 }
 
 const Meta2dProps: React.FunctionComponent<IMeta2dPropsProps> = (props) => {
-  const { selected, selectedData, type } = props;
+  const { type } = props;
   const _renderComp = useMemo(() => {
     switch (type) {
       case 'node':
-        return <NodeComponent />;
+        return <NodeComponent />; // 画布pen属性设置
       case 'line':
         return <h1>line</h1>;
       case 'multi':
         return <h1>multi</h1>;
       default:
-        return <BackgroundComponent />;
+        return <BackgroundComponent />; // 画布属性设置
     }
   }, [type]);
   return <section className={styles.rightConf}>{_renderComp}</section>;

@@ -1,14 +1,13 @@
+import { deepClone } from '@meta2d/core';
+import { parseSvg } from '@meta2d/svg';
 import { useSetState } from 'ahooks';
-import { Dropdown, Input, InputNumber, MenuProps, message } from 'antd';
+import { Dropdown, InputNumber, MenuProps, message } from 'antd';
+import * as FileSaver from 'file-saver';
 import React from 'react';
+import { history } from 'umi';
 import { useMeta } from '../../context';
 import { TOOL_LIST, savePreviewData } from './helper';
 import styles from './index.less';
-import * as FileSaver from 'file-saver';
-import _ from 'lodash';
-import { parseSvg } from '@meta2d/svg';
-import { deepClone } from '@meta2d/core';
-import { history } from 'umi';
 
 interface IHeaderProps {}
 
@@ -161,7 +160,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         break;
       case 'attention':
         savePreviewData({ ...meta2d.store.data });
-        history.push('preview');
+        history.push('/preview');
         break;
       default:
         break;

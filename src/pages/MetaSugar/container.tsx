@@ -1,26 +1,26 @@
-import { Meta2d } from '@meta2d/core';
-import React, { useEffect, useState } from 'react';
-import styles from './index.less';
-import { RightClick } from './components';
-import { containerDragResolve } from './components/LeftMaterial/crossDrag';
-import { PreviewButton, preConf, setFunMeta2D } from './hepler';
-import { flowPens } from '@meta2d/flow-diagram';
 import { activityDiagram } from '@meta2d/activity-diagram';
-import { classPens } from '@meta2d/class-diagram';
-import { sequencePens, sequencePensbyCtx } from '@meta2d/sequence-diagram';
-import { formPens } from '@meta2d/form-diagram';
 import {
   register as registerEcharts,
   registerHighcharts,
   registerLightningChart,
 } from '@meta2d/chart-diagram';
+import { classPens } from '@meta2d/class-diagram';
+import { Meta2d } from '@meta2d/core';
+import { flowPens } from '@meta2d/flow-diagram';
+import { formPens } from '@meta2d/form-diagram';
 import { chartsPens } from '@meta2d/le5le-charts';
-import { previewData, savePreviewData } from './components/Header/helper';
-import { isEmpty } from 'lodash';
+import { sequencePens, sequencePensbyCtx } from '@meta2d/sequence-diagram';
+import { useSetState, useUpdate } from 'ahooks';
 import { Button } from 'antd';
+import { isEmpty, isNil } from 'lodash';
+import { useEffect, useState } from 'react';
 import { history } from 'umi';
+import { RightClick } from './components';
+import { previewData, savePreviewData } from './components/Header/helper';
+import { containerDragResolve } from './components/LeftMaterial/crossDrag';
 import { IMeta } from './context';
-import { useUpdate } from 'ahooks';
+import { PreviewButton, preConf, setFunMeta2D } from './hepler';
+import styles from './index.less';
 
 export const MainMeta = (props) => {
   const {
@@ -33,6 +33,9 @@ export const MainMeta = (props) => {
   const update = useUpdate();
   const [isLoad, setIsLoad] = useState(false);
   const [meta2d, setState] = useState<IMeta>(null);
+  const [aState, setSAtate] = useSetState({
+    tempBg: '', // 模板背景颜色
+  });
   const isPreView = pageType === 'preview';
   useEffect(() => {
     // @ts-ignore
@@ -57,9 +60,6 @@ export const MainMeta = (props) => {
         Object.assign(options, preConf);
       }
       // 组件注册
-      registerEcharts();
-      registerHighcharts();
-      registerLightningChart();
       meta2d.registerCanvasDraw(chartsPens());
       meta2d.register(activityDiagram());
       meta2d.register(classPens());
@@ -67,6 +67,9 @@ export const MainMeta = (props) => {
       meta2d.registerCanvasDraw(sequencePensbyCtx());
       meta2d.registerCanvasDraw(formPens());
       meta2d.register(flowPens());
+      registerEcharts();
+      registerHighcharts();
+      registerLightningChart();
       meta2d.setOptions(options);
       meta2d.on('*', onMessage); // 监听所有事件
       setFunMeta2D(meta2d);
@@ -78,10 +81,18 @@ export const MainMeta = (props) => {
       }); */
       // @ts-ignore
       if (!isEmpty(previewData)) {
+        meta2d.clear();
         meta2d.open({ ...previewData, pens });
         update();
       }
       if (isPreView) {
+        if (
+          previewData?.data?.isScreen ||
+          (!isNil(meta2d.store.data?.height) &&
+            !isNil(meta2d.store.data?.width))
+        ) {
+          meta2d.setBackgroundColor('#1e2430');
+        }
         meta2d.lock(1);
       } else {
         meta2d.lock(0);
@@ -135,7 +146,12 @@ export const MainMeta = (props) => {
               width: '100%',
               flexShrink: '0',
               position: 'relative',
+              background: meta2d?.isScreen()
+                ? meta2d.store.data.background
+                : '',
             }
+          : meta2d?.isScreen()
+          ? { background: '#181b24' }
           : {}
       }
     >

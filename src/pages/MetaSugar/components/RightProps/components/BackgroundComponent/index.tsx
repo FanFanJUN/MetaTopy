@@ -1,20 +1,20 @@
 import { useMeta } from '@/pages/MetaSugar/context';
-import { useDeepCompareEffect, useSetState, useUpdate } from 'ahooks';
-import { InputNumber, Switch } from 'antd';
-import _ from 'lodash';
-import React, { useEffect } from 'react';
-import { TAB_LIST } from './helper';
-import styles from './index.less';
+import ColorPicker from '@/pages/component/ColorPicker';
 import {
-  RightOutlined,
-  LineChartOutlined,
-  EyeOutlined,
   EyeInvisibleOutlined,
+  EyeOutlined,
+  LineChartOutlined,
   LockOutlined,
+  RightOutlined,
   UnlockOutlined,
 } from '@ant-design/icons';
-import ColorPicker from '@/pages/component/ColorPicker';
 import { Pen } from '@meta2d/core';
+import { useDeepCompareEffect, useSetState, useUpdate } from 'ahooks';
+import { Input, InputNumber, Switch } from 'antd';
+import _ from 'lodash';
+import React from 'react';
+import { TAB_LIST } from './helper';
+import styles from './index.less';
 interface IAppProps {}
 
 const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
@@ -56,6 +56,18 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
         break;
       case 'background':
         meta2d.setBackgroundColor(value);
+        break;
+      case 'bkImage':
+        meta2d.setBackgroundImage(value);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        if (!value) {
+          meta2d.setBackgroundColor('#222629'); // 设置背景图片时
+        } else {
+          meta2d.setBackgroundColor('transparent'); // 设置背景图片时
+        }
+        break;
+      case 'penBackground':
+        meta2d.store.data.penBackground = value;
         break;
       default:
         break;
@@ -100,6 +112,33 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
                 value={option?.color}
                 onChange={(color?: string | undefined) =>
                   _handleChange('color', color, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>画笔填充颜色</span>
+              <ColorPicker
+                value={data?.penBackground}
+                onChange={(color?: string | undefined) =>
+                  _handleChange('penBackground', color, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>背景颜色</span>
+              <ColorPicker
+                value={data?.background ?? option?.background}
+                onChange={(color?: string | undefined) =>
+                  _handleChange('background', color, undefined)
+                }
+              />
+            </div>
+            <div className={styles.content__item__pro}>
+              <span>背景图片</span>
+              <Input.TextArea
+                value={data?.bkImage}
+                onChange={(e?: any | undefined) =>
+                  _handleChange('bkImage', e.target.value, undefined)
                 }
               />
             </div>
@@ -154,15 +193,6 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
                 value={option?.ruleColor}
                 onChange={(color?: string | undefined) =>
                   _handleChange('ruleColor', color, undefined)
-                }
-              />
-            </div>
-            <div className={styles.content__item__pro}>
-              <span>背景颜色</span>
-              <ColorPicker
-                value={data?.background ?? option?.background}
-                onChange={(color?: string | undefined) =>
-                  _handleChange('background', color, undefined)
                 }
               />
             </div>
