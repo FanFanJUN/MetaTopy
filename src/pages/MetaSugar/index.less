@@ -10,7 +10,8 @@
 }
 .main {
   height: calc(100vh - 50px);
-  width: calc(100vw - 440px);
+  width: calc(100vw - 460px);
+  overflow: hidden;
   flex-shrink: 0;
   position: relative;
   .meta2d {
@@ -39,15 +40,5 @@
         margin-right: 0;
       }
     }
-  }
-  // 大屏背景
-  &[data-isscreen='true'] {
-    // &[data-isPreview='true'] {
-    //   & > canvas {
-    //     &:first-of-type {
-    //       background: #0c0c20;
-    //     }
-    //   }
-    // }
   }
 }

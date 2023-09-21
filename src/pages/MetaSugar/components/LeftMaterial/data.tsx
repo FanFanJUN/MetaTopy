@@ -405,7 +405,7 @@ const icons_form = [
   },
 ];
 
-const icons_chart = [
+export const icons_chart = [
   {
     key: 't-line-chart',
     title: '折线图',
@@ -622,12 +622,6 @@ export const ICON_TAB = [
     fontFamily: 't-icon',
   },
   {
-    name: '图表',
-    key: 'chart',
-    list: icons_chart,
-    fontFamily: 't-icon',
-  },
-  {
     name: '国家电网图标',
     key: 'sgcc',
     list: SGCC_ICON,
@@ -638,5 +632,277 @@ export const ICON_TAB = [
     key: 'ltdx',
     list: LTDX_ICON,
     fontFamily: 'ltdx',
+  },
+];
+
+export const chart_gauge = [
+  {
+    key: 'l-dashboard-chart',
+    useSvg: true,
+    title: '仪表盘',
+    data: {
+      name: 'echarts',
+      externElement: true,
+      width: 265,
+      height: 235,
+      disableAnchor: true,
+      echarts: {
+        option: {
+          fontSize: 10,
+          series: [
+            {
+              name: '最外部进度条',
+              type: 'gauge',
+              radius: '96%',
+              splitNumber: 10,
+              axisLine: {
+                lineStyle: {
+                  color: [[1, 'rgba(107,157,215,.25)']],
+                  width: 8,
+                },
+              },
+              progress: {
+                show: true,
+                width: 8,
+              },
+              axisTick: {
+                distance: 8,
+                splitNumber: 5,
+                lineStyle: {
+                  color: '#42E5FB',
+                  width: 1,
+                },
+                length: 8,
+              },
+              splitLine: {
+                distance: 8,
+                length: 15,
+                lineStyle: {
+                  width: 2,
+                  color: '#42E5FB',
+                },
+              },
+              axisLabel: {
+                show: false,
+                fontSize: 12,
+              },
+              itemStyle: {
+                show: false,
+              },
+              detail: {
+                color: '#ACCFFF',
+                fontSize: 16,
+                offsetCenter: [0, 50],
+              },
+              data: [
+                {
+                  value: 50,
+                },
+              ],
+              pointer: {
+                length: '40%',
+                radius: '20%',
+                width: 4,
+                itemStyle: {
+                  color: '#45CAED',
+                  borderWidth: 0,
+                },
+              },
+            },
+            {
+              name: '指针上的圆',
+              type: 'pie',
+              z: 5,
+              hoverAnimation: false,
+              legendHoverLink: false,
+              radius: ['0%', '6%'],
+              center: ['50%', '50%'],
+              label: {
+                normal: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                {
+                  value: 10,
+                  itemStyle: {
+                    normal: {
+                      color: '#45CAED',
+                      borderWidth: 0,
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              name: '外层透明圆',
+              type: 'pie',
+              radius: '60%',
+              startAngle: 0,
+              endAngle: 360,
+              hoverAnimation: false,
+              center: ['50%', '50%'],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                {
+                  value: 1,
+                },
+              ],
+              itemStyle: {
+                normal: {
+                  color: {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 0,
+                    y2: 1,
+                    colorStops: [
+                      {
+                        offset: 0,
+                        color: '#17A1FF',
+                      },
+                      {
+                        offset: 1,
+                        color: 'rgba(17, 90, 233, 0.16)',
+                      },
+                    ],
+                  },
+                  opacity: 0.2,
+                },
+              },
+            },
+            {
+              name: '内圆',
+              type: 'pie',
+              radius: '48%',
+              center: ['50%', '50%'],
+              startAngle: 0,
+              endAngle: 360,
+              label: {
+                show: false,
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                {
+                  value: 1,
+                },
+              ],
+              itemStyle: {
+                color: {
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#23A6FF',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(17, 90, 233, 0.21)  ',
+                    },
+                  ],
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  type: 'linear',
+                  global: false,
+                },
+                opacity: 0.5,
+                borderWidth: 0,
+              },
+            },
+          ],
+        },
+        replaceMode: 1,
+        theme: 'le-dark',
+      },
+    },
+  },
+  {
+    key: 'l-dashboard-chart',
+    useSvg: true,
+    title: '仪表盘',
+    data: {
+      name: 'echarts',
+      width: 265,
+      height: 235,
+      disableAnchor: true,
+      echarts: {
+        option: {
+          fontSize: 10,
+          series: [
+            {
+              type: 'gauge',
+              radius: '100%',
+              axisLine: {
+                roundCap: true,
+                lineStyle: {
+                  color: [[1, 'rgba(107,157,215,.25)']],
+                  width: 8,
+                },
+              },
+              axisTick: {
+                distance: 4,
+                length: 8,
+                lineStyle: {
+                  color: '#6B9DD7',
+                },
+              },
+              splitLine: {
+                distance: 4,
+                length: 10,
+                lineStyle: {
+                  width: 2,
+                  color: 'rgb(107,157,215)',
+                },
+              },
+              detail: {
+                color: '#0c56eb',
+                fontSize: 16,
+              },
+              progress: {
+                show: true,
+                roundCap: true,
+                width: 8,
+              },
+              axisLabel: {
+                color: '#ddd',
+                fontSize: 12,
+                distance: 15,
+              },
+              itemStyle: {
+                color: '#0c56eb',
+              },
+              pointer: {
+                length: 100,
+                width: 6,
+                itemStyle: {
+                  borderWidth: 0,
+                },
+              },
+              data: [
+                {
+                  value: 68,
+                },
+              ],
+            },
+          ],
+        },
+        // replaceMode: 1,
+        // theme: 'le-dark',
+      },
+    },
   },
 ];

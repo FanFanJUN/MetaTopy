@@ -10,18 +10,25 @@ import { flowPens } from '@meta2d/flow-diagram';
 import { formPens } from '@meta2d/form-diagram';
 import { chartsPens } from '@meta2d/le5le-charts';
 import { sequencePens, sequencePensbyCtx } from '@meta2d/sequence-diagram';
-import { useSetState, useUpdate } from 'ahooks';
+import { useDeepCompareEffect, useUpdate } from 'ahooks';
 import { Button } from 'antd';
 import { isEmpty, isNil } from 'lodash';
 import { useEffect, useState } from 'react';
-import { history } from 'umi';
 import { RightClick } from './components';
-import { previewData, savePreviewData } from './components/Header/helper';
+import { previewData } from './components/Header/helper';
 import { containerDragResolve } from './components/LeftMaterial/crossDrag';
 import { IMeta } from './context';
 import { PreviewButton, preConf, setFunMeta2D } from './hepler';
 import styles from './index.less';
 
+const options = {
+  background: '#222629',
+  rule: true,
+  color: '#278df8',
+  locked: 0,
+};
+
+let metaTopology = null;
 export const MainMeta = (props) => {
   const {
     mateConf = {},
@@ -32,33 +39,26 @@ export const MainMeta = (props) => {
   } = props;
   const update = useUpdate();
   const [isLoad, setIsLoad] = useState(false);
+  // @ts-ignore
   const [meta2d, setState] = useState<IMeta>(null);
-  const [aState, setSAtate] = useSetState({
-    tempBg: '', // 模板背景颜色
-  });
   const isPreView = pageType === 'preview';
   useEffect(() => {
     // @ts-ignore
-    const metaTopology = new Meta2d('meta2d');
-    window.meta2d = metaTopology;
+    metaTopology = new Meta2d('meta2d', {
+      ...options,
+      ...(isPreView ? preConf : {}),
+      ...mateConf,
+    });
+    // @ts-ignore
     setFunMeta2D(metaTopology);
     onComplete && onComplete(metaTopology);
+    // @ts-ignore
     setState(metaTopology);
     setIsLoad(true);
   }, []);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (meta2d) {
-      const options = {
-        background: '#222629',
-        rule: true,
-        color: '#278df8',
-        locked: 0,
-        ...mateConf,
-      };
-      if (isPreView) {
-        Object.assign(options, preConf);
-      }
       // 组件注册
       meta2d.registerCanvasDraw(chartsPens());
       meta2d.register(activityDiagram());
@@ -70,33 +70,36 @@ export const MainMeta = (props) => {
       registerEcharts();
       registerHighcharts();
       registerLightningChart();
-      meta2d.setOptions(options);
       meta2d.on('*', onMessage); // 监听所有事件
       setFunMeta2D(meta2d);
-      const pens = previewData?.pens || [];
+      const preData = JSON.parse(previewData) || {};
+      // const pens = preData?.pens || [];
       /*  pens.forEach((item) => {
         item.locked = isPreView ? 2 : 0;
         item.disableAnchor = isPreView ? true : false;
         item.disableInput = isPreView ? true : false;
       }); */
-      // @ts-ignore
-      if (!isEmpty(previewData)) {
+      if (preData && !isEmpty(preData)) {
         meta2d.clear();
-        meta2d.open({ ...previewData, pens });
+        // @ts-ignore
+        meta2d.open({ ...preData }, true);
         update();
       }
+      // @ts-ignore
       if (isPreView) {
         if (
-          previewData?.data?.isScreen ||
+          preData?.data?.isScreen ||
           (!isNil(meta2d.store.data?.height) &&
             !isNil(meta2d.store.data?.width))
         ) {
           meta2d.setBackgroundColor('#1e2430');
         }
         meta2d.lock(1);
+        meta2d.setRule({ rule: false });
       } else {
         meta2d.lock(0);
       }
+      // let data: any = localStorage.getItem('meta2d') || '{}';
       if (meta2d.isScreen()) {
         meta2d.fitSizeView();
       } else {
@@ -105,6 +108,7 @@ export const MainMeta = (props) => {
       meta2d.resize();
     }
     return () => {
+      metaTopology = null;
       meta2d && meta2d.off('*', onMessage);
     };
   }, [meta2d]);
@@ -112,7 +116,8 @@ export const MainMeta = (props) => {
   const _handleOp = (tKey: string) => {
     switch (tKey) {
       case 'back':
-        history.push('/');
+        // history.push('/');
+        history.back();
         break;
       case 'centerView':
         meta2d.centerView();
@@ -129,7 +134,6 @@ export const MainMeta = (props) => {
       default:
         break;
     }
-    savePreviewData(meta2d.store.data);
     meta2d.resize();
   };
 
@@ -146,9 +150,7 @@ export const MainMeta = (props) => {
               width: '100%',
               flexShrink: '0',
               position: 'relative',
-              background: meta2d?.isScreen()
-                ? meta2d.store.data.background
-                : '',
+              background: meta2d?.isScreen() ? '#1e2430' : '',
             }
           : meta2d?.isScreen()
           ? { background: '#181b24' }

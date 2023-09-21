@@ -38,7 +38,7 @@ export default defineConfig({
   ],
   scripts: [
     { src: `/canvas2svg.js` },
-    'https://cdn.bootcss.com/echarts/4.3.0/echarts.min.js', // 全局echarts实例
+    '/js/echarts.min.js', // 全局echarts实例
   ],
   history: {
     type: 'hash',

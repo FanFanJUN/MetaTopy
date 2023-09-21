@@ -1,5 +1,5 @@
-import { IMeta } from './context';
 import _, { isNil } from 'lodash';
+import { IMeta } from './context';
 
 /**
  * meta2d 拓展方法和属性
@@ -61,3 +61,11 @@ export const PreviewButton = (isTemp: boolean) => {
     // },
   ];
 };
+
+export async function onWaitPromise(time = 500) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+}

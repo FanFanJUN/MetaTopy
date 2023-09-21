@@ -1,41 +1,39 @@
-import {
-  AppstoreAddOutlined,
-  ArrowDownOutlined,
-  ArrowRightOutlined,
-  FolderOpenOutlined,
-} from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useSetState } from 'ahooks';
-import _ from 'lodash';
+import { keyBy } from 'lodash';
 import { useEffect } from 'react';
 import { useMeta } from '../../context';
 import { dragEventResolve } from './crossDrag';
-import { ICON_TAB } from './data';
 import { TAB_LIST } from './helper';
 import styles from './index.less';
 
 const LeftMaterial = () => {
   const [state, setState] = useSetState({
     activeTab: 'system',
-    expandKeys: _.map(
-      _.filter(ICON_TAB, (n) => n.expand),
-      'key',
-    ),
+    expandKeys: [],
   });
   const { meta2d } = useMeta();
 
+  useEffect(() => {
+    const expList = TAB_LIST.filter((item) => item.key === state.activeTab)?.[0]
+      .list.filter((sItem) => sItem?.expand)
+      ?.map((d) => d.key);
+    setState({ expandKeys: expList });
+  }, [state.activeTab]);
+
   useEffect(() => {}, [meta2d]);
 
-  const _renderList = () => {
+  const _renderList = (l: any) => {
     return (
       <div className={styles.aside__content__system}>
         <div className={styles.iconTabList}>
-          {ICON_TAB.map((item) => {
+          {l?.map((item) => {
             const isShow = state.expandKeys.includes(item.key);
             return (
               <div className={styles.iconTabList__item} key={item.key}>
                 <div
                   style={{
-                    padding: '0 20px',
+                    padding: '0 8px',
                     justifyContent: 'space-between',
                     display: 'flex',
                     alignItems: 'center',
@@ -43,7 +41,7 @@ const LeftMaterial = () => {
                   }}
                 >
                   <div>
-                    <FolderOpenOutlined style={{ marginRight: '4px' }} />
+                    {/* <FolderOpenOutlined style={{ marginRight: '4px' }} /> */}
                     {item.name}
                   </div>
                   <span
@@ -75,6 +73,19 @@ const LeftMaterial = () => {
                 >
                   {item.list.map((icon) => {
                     const { key, title, data } = icon;
+                    if (icon.useSvg) {
+                      return (
+                        <div
+                          key={key}
+                          {...dragEventResolve(meta2d, data)}
+                          className={styles.iconTabList__item__list__usesvg}
+                        >
+                          <svg className={styles.ticonusescg}>
+                            <use href={`#${key}`}></use>
+                          </svg>
+                        </div>
+                      );
+                    }
                     return (
                       <div
                         key={key}
@@ -94,23 +105,19 @@ const LeftMaterial = () => {
             );
           })}
         </div>
-        <div className={styles.iconButton}>
+        {/* <div className={styles.iconButton}>
           <div className={styles.iconButton__inner}>
             <AppstoreAddOutlined />
             图形库管理
           </div>
-        </div>
+        </div> */}
       </div>
     );
   };
 
   const _renderComp = () => {
-    switch (state.activeTab) {
-      case 'system':
-        return _renderList();
-      default:
-        break;
-    }
+    const list = keyBy(TAB_LIST, 'key')[state.activeTab].list;
+    return _renderList(list);
   };
 
   return (
@@ -128,6 +135,9 @@ const LeftMaterial = () => {
                 }
               }}
             >
+              <svg className={styles.ticonscg}>
+                <use href={`#${item.icon}`}></use>
+              </svg>
               <p>{item.name}</p>
             </div>
           );

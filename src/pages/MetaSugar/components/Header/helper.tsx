@@ -106,96 +106,9 @@ export const TOOL_LIST = [
     name: '预览',
     toolKey: 'attention',
   },
-  {
-    name: '社区',
-    toolKey: 'shequ',
-    dropdown: {
-      type: 'menu',
-      items: [
-        {
-          label: (
-            <a href="https://github.com/le5le-com" target="_blank">
-              Github
-            </a>
-          ),
-          key: 'Github',
-        },
-        {
-          label: (
-            <a href="https://github.com/le5le-com/meta2d.js" target="_blank">
-              核心库
-            </a>
-          ),
-          key: 'core',
-        },
-        {
-          label: (
-            <a href="https://t.le5le.com/" target="_blank">
-              产品
-            </a>
-          ),
-          key: 'product',
-        },
-      ],
-    },
-  },
-  {
-    name: '帮助',
-    toolKey: 'help-circle',
-    dropdown: {
-      type: 'menu',
-      items: [
-        {
-          label: (
-            <a
-              href="http://developer.le5le.com/topology-documents/tutorial/introduction.html"
-              target="_blank"
-            >
-              使用教程
-            </a>
-          ),
-          key: 'use',
-        },
-        {
-          label: (
-            <a
-              href="http://developer.le5le.com/topology-documents/api/core.html"
-              target="_blank"
-            >
-              开发文档
-            </a>
-          ),
-          key: 'devDoc',
-          link: '',
-        },
-        {
-          label: (
-            <a
-              href="http://developer.le5le.com/topology-documents/api/core.html"
-              target="_blank"
-            >
-              用户手册
-            </a>
-          ),
-          key: 'useBook',
-        },
-        {
-          label: (
-            <a
-              href="http://developer.le5le.com/topology-documents/tutorial/keyboards.html"
-              target="_blank"
-            >
-              快捷键
-            </a>
-          ),
-          key: 'keyboard',
-        },
-      ],
-    },
-  },
 ];
 
-export let previewData: undefined | Record<any, any> = undefined;
-export const savePreviewData = (data: undefined | object) => {
+export let previewData: string = '{}';
+export const savePreviewData = (data: string) => {
   previewData = data;
 };
