@@ -1,9 +1,7 @@
-import { deepClone } from '@meta2d/core';
-import { IMeta } from './../../../context';
-import { Pen } from '@meta2d/core';
-import _ from 'lodash';
-import { DragEvent } from 'react';
+import { Pen, deepClone } from '@meta2d/core';
 import { Modal } from 'antd';
+import { DragEvent } from 'react';
+import { IMeta } from './../../../context';
 
 export let currentDrag: Pen | null = null;
 export const dragEventResolve = function (meta2d: IMeta, item: Pen) {

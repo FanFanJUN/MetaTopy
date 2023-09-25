@@ -1,0 +1,35 @@
+.penParam {
+  padding: 0 10px;
+  .list {
+    display: flex;
+    flex-direction: column;
+    [data-list-item] {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .edit {
+    text-align: right;
+    display: flex;
+    background: #4583ff;
+    height: 29px;
+    width: fit-content;
+    padding: 4px 10px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+  [class='ant-input'] {
+    margin: 10px 0;
+  }
+  .json {
+    [class='react-json-view'] {
+      width: 100%;
+      overflow: auto;
+    }
+  }
+}

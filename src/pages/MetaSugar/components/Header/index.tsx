@@ -3,7 +3,7 @@ import { parseSvg } from '@meta2d/svg';
 import { useSetState } from 'ahooks';
 import { Dropdown, InputNumber, MenuProps, message } from 'antd';
 import * as FileSaver from 'file-saver';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { history } from 'umi';
 import { useMeta } from '../../context';
 import { TOOL_LIST, savePreviewData } from './helper';
@@ -17,6 +17,9 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
     activeToolKey: '',
     lineWidth: meta2d?.data()?.lineWidth || 1,
   });
+  useEffect(() => {
+    setState({ lineWidth: meta2d?.data()?.lineWidth || 1 });
+  }, [meta2d?.data()?.lineWidth || 1]);
 
   const onHandleImportJson = () => {
     const input = document.createElement('input');
@@ -91,6 +94,12 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
     a.dispatchEvent(evt);
   };
 
+  const resetEvent = () => {
+    meta2d.hideMagnifier();
+    meta2d.stopPencil();
+    meta2d.drawLine();
+  };
+
   const _handleOp = (type: string) => {
     const isActive = state.activeToolKey === type;
     if (!isActive) {
@@ -117,6 +126,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         if (isActive) {
           meta2d.drawLine();
         } else {
+          meta2d.stopPencil();
           meta2d.drawLine('curve');
         }
         break;
@@ -124,10 +134,12 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         if (isActive) {
           meta2d.stopPencil();
         } else {
+          meta2d.drawLine();
           meta2d.drawingPencil();
         }
         break;
       case 'newFile':
+        resetEvent();
         // @ts-ignore
         meta2d.open({ pens: [] });
         break;
@@ -140,6 +152,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         );
         break;
       case 'openLocalFile':
+        resetEvent();
         onHandleImportJson();
         break;
       case 'downloadPng':
@@ -198,7 +211,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
             <div
               key={item.toolKey}
               onClick={(e) => {
-                if (item.toolKey === 'folder') {
+                if (['folder', 'xiankuan'].includes(item.toolKey)) {
                   e.preventDefault();
                   return;
                 }
@@ -207,6 +220,12 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               data-toolKey={item.toolKey}
               className={`${styles.header__middle__item}`}
               data-isDivider={item.toolKey.includes('divider_T')}
+              style={
+                state.activeToolKey === item.toolKey &&
+                ['curve', 'qianbi', 'fangdajing', 'ditu'].includes(item.toolKey)
+                  ? { color: 'rgb(24, 144, 255)' }
+                  : {}
+              }
             >
               <div className={styles.topItem}>
                 {renderIcon(item)}
@@ -241,9 +260,8 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
                         step={1}
                         min={1}
                         onChange={(value: number | null) => {
-                          // meta2d.setOptions({
-                          //   linew
-                          // })
+                          meta2d.store.data.lineWidth = value || 1;
+                          resetEvent();
                           setState({ lineWidth: value });
                         }}
                       />
@@ -253,6 +271,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               });
             }
             return (
+              // eslint-disable-next-line react/jsx-key
               <Dropdown
                 overlayClassName={`${styles.dropdown} ${
                   item.dropdown.hasDivider ? styles.hasDivider : ''

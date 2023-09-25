@@ -1,18 +1,11 @@
 import { useMeta } from '@/pages/MetaSugar/context';
 import ColorPicker from '@/pages/component/ColorPicker';
-import {
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  LineChartOutlined,
-  LockOutlined,
-  RightOutlined,
-  UnlockOutlined,
-} from '@ant-design/icons';
-import { Pen } from '@meta2d/core';
+import { RightOutlined } from '@ant-design/icons';
 import { useDeepCompareEffect, useSetState, useUpdate } from 'ahooks';
 import { Input, InputNumber, Switch } from 'antd';
 import _ from 'lodash';
 import React from 'react';
+import { Structure } from '../NodeComponent/components';
 import { TAB_LIST } from './helper';
 import styles from './index.less';
 interface IAppProps {}
@@ -215,70 +208,12 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
     );
   };
 
-  const _setValue = (type: Pen, item: Pen) => {
-    meta2d.setValue({
-      id: item.id,
-      [type]: !(type === 'lock' ? item?.[type] ?? false : item?.[type] ?? true),
-    });
-    meta2d.render();
-    update();
-  };
-
-  const _renderStructure = () => {
-    const pens = meta2d.data().pens;
-    if (pens.length) {
-      return (
-        <div className={styles.structureWrap}>
-          {pens.map((item) => {
-            return (
-              <div
-                key={item.id}
-                className={styles.structureWrap__item}
-                style={{
-                  color: item.visible ?? true ? '' : '#bfbfbf',
-                }}
-              >
-                <div className={styles.structureWrap__item__left}>
-                  <LineChartOutlined />
-                  <span onClick={() => {}} style={{ cursor: 'pointer' }}>
-                    {item.name}
-                  </span>
-                </div>
-                <div className={styles.structureWrap__item__right}>
-                  <span
-                    onClick={() => {
-                      _setValue('locked', item);
-                    }}
-                  >
-                    {item.locked ? <LockOutlined /> : <UnlockOutlined />}
-                  </span>
-                  <span
-                    onClick={() => {
-                      _setValue('visible', item);
-                    }}
-                  >
-                    {item.visible ?? true ? (
-                      <EyeOutlined />
-                    ) : (
-                      <EyeInvisibleOutlined />
-                    )}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
-    return <></>;
-  };
-
   const _renderContent = () => {
     switch (state.activeTab) {
       case 'canvas':
         return _renderCanvas();
       case 'structure':
-        return _renderStructure();
+        return <Structure />;
       default:
         break;
     }

@@ -66,14 +66,14 @@ export const TOOL_LIST = [
     name: '缩略图',
     toolKey: 'ditu',
   },
-  {
+  /* {
     name: '起点',
-    toolKey: 'line',
+    toolKey: 'fromArrow',
   },
   {
     name: '终点',
-    toolKey: 'line',
-  },
+    toolKey: 'toArrow',
+  }, */
   {
     name: '连线',
     toolKey: 'curve2',

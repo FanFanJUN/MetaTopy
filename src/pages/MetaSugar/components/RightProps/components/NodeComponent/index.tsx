@@ -1,15 +1,11 @@
-import { useMeta } from '@/pages/MetaSugar/context';
-import _ from 'lodash';
-import React from 'react';
-import ReactJson from 'react-json-view';
-import styles from './index.less';
-import { TAB_LIST } from './helper';
 import { useSetState } from 'ahooks';
-import { Show } from './components';
+import React from 'react';
+import { PenParam, Show, Structure } from './components';
+import { TAB_LIST } from './helper';
+import styles from './index.less';
 interface IAppProps {}
 
 const NodeComponent: React.FunctionComponent<IAppProps> = (props) => {
-  const { meta2d } = useMeta();
   const [state, setState] = useSetState({
     activeTab: 'show',
   });
@@ -18,12 +14,11 @@ const NodeComponent: React.FunctionComponent<IAppProps> = (props) => {
     switch (state.activeTab) {
       case 'show':
         return <Show />;
+      // pen data
       case 'data':
-        return (
-          <ReactJson
-            src={_.omit(meta2d.store.active?.[0], ['calculative', 'anchors'])}
-          />
-        );
+        return <PenParam />;
+      case 'struct':
+        return <Structure />;
       default:
         break;
     }

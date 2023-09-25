@@ -1,12 +1,28 @@
 .home {
   height: 100vh;
   display: flex;
+  min-width: 500px;
   overflow-y: hidden;
   flex-direction: column;
   &__container {
     display: flex;
     height: calc(100vh - 50px);
   }
+  /* &::-webkit-scrollbar {
+    width: 3px !important;
+    height: 6px !important;
+    background: transparent !important;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: transparent !important;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #dad7d7 !important;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent !important;
+  } */
 }
 .main {
   height: calc(100vh - 50px);

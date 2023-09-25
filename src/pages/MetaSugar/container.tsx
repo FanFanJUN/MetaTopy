@@ -7,7 +7,7 @@ import {
 import { classPens } from '@meta2d/class-diagram';
 import { Meta2d } from '@meta2d/core';
 import { flowPens } from '@meta2d/flow-diagram';
-import { formPens } from '@meta2d/form-diagram';
+import { formPath2DPens, formPens } from '@meta2d/form-diagram';
 import { chartsPens } from '@meta2d/le5le-charts';
 import { sequencePens, sequencePensbyCtx } from '@meta2d/sequence-diagram';
 import { useDeepCompareEffect, useUpdate } from 'ahooks';
@@ -18,11 +18,16 @@ import { RightClick } from './components';
 import { previewData } from './components/Header/helper';
 import { containerDragResolve } from './components/LeftMaterial/crossDrag';
 import { IMeta } from './context';
-import { PreviewButton, preConf, setFunMeta2D } from './hepler';
+import {
+  PreviewButton,
+  preConf,
+  registerCustomDraw,
+  setFunMeta2D,
+} from './hepler';
 import styles from './index.less';
 
 const options = {
-  background: '#222629',
+  background: '#1e2430',
   rule: true,
   color: '#278df8',
   locked: 0,
@@ -66,6 +71,9 @@ export const MainMeta = (props) => {
       meta2d.register(sequencePens());
       meta2d.registerCanvasDraw(sequencePensbyCtx());
       meta2d.registerCanvasDraw(formPens());
+      meta2d.register(formPath2DPens()); //版本>=1.0.9
+      // 其他注册组件
+      registerCustomDraw(meta2d);
       meta2d.register(flowPens());
       registerEcharts();
       registerHighcharts();

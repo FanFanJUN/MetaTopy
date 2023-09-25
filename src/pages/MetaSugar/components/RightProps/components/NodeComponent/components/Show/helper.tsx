@@ -71,6 +71,11 @@ export const Show_List = [
         type: 'colorPicker',
       },
       {
+        name: '选中背景颜色',
+        toolKey: 'activeBackground',
+        type: 'colorPicker',
+      },
+      {
         name: '透明度',
         toolKey: 'globalAlpha',
         type: 'inputNumber',

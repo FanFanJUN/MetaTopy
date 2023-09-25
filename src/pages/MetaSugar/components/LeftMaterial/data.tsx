@@ -1,7 +1,55 @@
-import { LTDX_ICON } from './graphics/ltdx';
-import { SGCC_ICON } from './graphics/sgcc';
-
 export const icons_common = [
+  {
+    key: 't-text',
+    title: '文本',
+    fontFamily: 't-icon',
+    data: {
+      name: 'text',
+      text: '文本',
+      width: 100,
+      height: 20,
+    },
+  },
+  {
+    key: 't-line',
+    title: '直线',
+    fontFamily: 't-icon',
+    data: {
+      name: 'line',
+      lineName: 'line',
+      dash: 0,
+      lineWidth: 2,
+      width: 200,
+      height: 0,
+      lineHeight: 1.5,
+      rotate: 0,
+      length: 200,
+      bkType: 0,
+      type: 1,
+      anchors: [
+        {
+          x: 1,
+          y: 0,
+        },
+        {
+          x: 0,
+          y: 1,
+        },
+      ],
+    },
+  },
+  {
+    key: 't-line',
+    title: '直线',
+    fontFamily: 't-icon',
+    data: {
+      name: 'beeline',
+      width: 200,
+      height: 10,
+      x: 100,
+      y: 100,
+    },
+  },
   {
     key: 'icon-rect',
     title: '矩形',
@@ -55,9 +103,21 @@ export const icons_common = [
       autoPlay: true,
     },
   },
+  {
+    key: 't-02',
+    title: 'iframe',
+    fontFamily: 't-icon',
+    data: {
+      name: 'iframe',
+      width: 800,
+      height: 400,
+      iframe: 'https://ditu.amap.com/',
+      externElement: true,
+    },
+  },
 ];
 
-const icons_basic = [
+export const icons_basic = [
   {
     key: 't-rect',
     title: '正方形',
@@ -185,10 +245,10 @@ const icons_basic = [
   },
 ];
 
-const icons_form = [
+export const icons_form = [
   {
     key: 't-biaoge',
-    title: '文本',
+    title: '列表',
     data: {
       name: 'table2',
       width: 0,
@@ -403,6 +463,33 @@ const icons_form = [
       ],
     },
   },
+  {
+    key: 't-clock',
+    title: '时间',
+    data: {
+      name: 'time',
+      timeFormat:
+        '`${year}-${month}-${day} ${hours}:${minutes}:${seconds} 星期${week}`',
+      fillZero: true,
+      width: 218,
+      height: 32,
+      text: '2023-09-21 09:14:45 星期四',
+      interval: 4166,
+      lineWidth: 0,
+      form: [
+        {
+          key: 'timeFormat',
+          name: '显示格式',
+          type: 'text',
+        },
+        {
+          key: 'fillZero',
+          name: '是否补0',
+          type: 'switch',
+        },
+      ],
+    },
+  },
 ];
 
 export const icons_chart = [
@@ -498,8 +585,8 @@ export const icons_chart = [
     title: '仪表盘',
     data: {
       name: 'gauge',
-      width: 400,
-      height: 400,
+      width: 200,
+      height: 200,
       disableAnchor: true,
       value: 90,
       unit: 'm/s',
@@ -513,138 +600,112 @@ export const icons_chart = [
     },
   },
   {
-    key: 't-bar-chart',
-    title: '柱状图-echarts格式',
+    key: 't-07',
+    title: '时钟',
     data: {
-      name: 'histogram',
-      width: 400,
-      height: 200,
+      clockInterval: 1043,
+      color: '#1890ff',
       disableAnchor: true,
-      echarts: {
-        option: {
-          color: ['#1890ff'],
-          xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          },
-          yAxis: {
-            type: 'value',
-          },
-          series: [
-            {
-              data: [120, 200, 150, 80, 70, 110, 130],
-              type: 'bar',
-            },
-          ],
-        },
-      },
-    },
-  },
-  {
-    key: 't-bar-chart',
-    title: '柱状图-echarts格式',
-    data: {
-      name: 'echarts',
-      width: 400,
+      max: 12,
+      min: 0,
+      name: 'gauge',
+      endAngle: -270,
+      startAngle: 90,
+      splitNumber: 12,
+      width: 200,
       height: 200,
-      echarts: {
-        option: {
-          xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          },
-          yAxis: {
-            type: 'value',
-          },
-          series: [
-            {
-              data: [820, 932, 901, 934, 1290, 1330, 1320],
-              type: 'line',
-            },
-          ],
-        },
-      },
+      hourvalue: 11.649722222222222,
+      minutevalue: 38.983333333333334,
+      secondvalue: 59,
+      background: '#3A3A3A',
+      isClock: true,
     },
-  },
-];
-
-export const ICON_TAB = [
-  {
-    name: '常用图形',
-    key: 'commonGraphics',
-    list: icons_common,
-    fontFamily: 'iconfont',
-    expand: true,
-  },
-  {
-    name: '基本图形',
-    key: 'basicGraphics',
-    list: icons_basic,
-    fontFamily: 't-icon',
-    expand: true,
-  },
-  {
-    name: '脑图',
-    key: 'brainMap',
-    list: [
-      {
-        key: 't-zhuti',
-        title: '主题',
-        data: {
-          name: 'mindNode',
-          text: '主题',
-          width: 180,
-          height: 45,
-          borderRadius: 0.5,
-          lineHeight: 1.5,
-          lineWidth: 1,
-        },
-      },
-      {
-        key: 't-zizhuti',
-        title: '子主题',
-        data: {
-          name: 'mindLine',
-          text: '子主题',
-          width: 144,
-          height: 36,
-          lineHeight: 1.5,
-          lineWidth: 1,
-        },
-      },
-    ],
-    fontFamily: 't-icon',
-  },
-  {
-    name: '表单',
-    key: 'form',
-    list: icons_form,
-    fontFamily: 't-icon',
-  },
-  {
-    name: '国家电网图标',
-    key: 'sgcc',
-    list: SGCC_ICON,
-    fontFamily: 'sgcc',
-  },
-  {
-    name: '电气工厂常用',
-    key: 'ltdx',
-    list: LTDX_ICON,
-    fontFamily: 'ltdx',
   },
 ];
 
 export const chart_gauge = [
   {
-    key: 'l-dashboard-chart',
-    useSvg: true,
-    title: '仪表盘',
+    key: 'icon-gongyezujian-yibiaopan',
+    title: '基础仪表盘',
+    data: {
+      name: 'echarts',
+      width: 200,
+      height: 200,
+      disableAnchor: true,
+      echarts: {
+        option: {
+          fontSize: 10,
+          series: [
+            {
+              type: 'gauge',
+              radius: '100%',
+              axisLine: {
+                roundCap: true,
+                lineStyle: {
+                  color: [[1, 'rgba(107,157,215,.25)']],
+                  width: 8,
+                },
+              },
+              axisTick: {
+                distance: 4,
+                length: 8,
+                lineStyle: {
+                  color: '#6B9DD7',
+                },
+              },
+              splitLine: {
+                distance: 4,
+                length: 10,
+                lineStyle: {
+                  width: 2,
+                  color: 'rgb(107,157,215)',
+                },
+              },
+              detail: {
+                color: '#0c56eb',
+                fontSize: 16,
+              },
+              progress: {
+                show: true,
+                roundCap: true,
+                width: 8,
+              },
+              axisLabel: {
+                color: '#ddd',
+                fontSize: 12,
+                distance: 15,
+              },
+              itemStyle: {
+                color: '#0c56eb',
+              },
+              pointer: {
+                length: 100,
+                width: 6,
+                itemStyle: {
+                  borderWidth: 0,
+                },
+              },
+              data: [
+                {
+                  value: 68,
+                },
+              ],
+            },
+          ],
+        },
+        replaceMode: 1,
+        theme: 'le-dark',
+      },
+    },
+  },
+  {
+    key: 'icon-gongyezujian-yibiaopan',
+    title: '圆盘仪表盘',
     data: {
       name: 'echarts',
       externElement: true,
-      width: 265,
-      height: 235,
+      width: 200,
+      height: 200,
       disableAnchor: true,
       echarts: {
         option: {
@@ -696,7 +757,7 @@ export const chart_gauge = [
               },
               data: [
                 {
-                  value: 50,
+                  value: 68,
                 },
               ],
               pointer: {
@@ -831,78 +892,324 @@ export const chart_gauge = [
     },
   },
   {
-    key: 'l-dashboard-chart',
-    useSvg: true,
-    title: '仪表盘',
+    key: 'icon-yibiaopan1',
+    title: '进度仪表盘',
     data: {
       name: 'echarts',
-      width: 265,
-      height: 235,
+      externElement: true,
+      width: 200,
+      height: 200,
       disableAnchor: true,
       echarts: {
         option: {
           fontSize: 10,
           series: [
             {
+              name: '最外部环',
               type: 'gauge',
-              radius: '100%',
+              radius: '96%',
+              splitNumber: 10,
               axisLine: {
-                roundCap: true,
                 lineStyle: {
-                  color: [[1, 'rgba(107,157,215,.25)']],
+                  color: [[1, '#33507A']],
                   width: 8,
                 },
               },
               axisTick: {
-                distance: 4,
-                length: 8,
+                distance: 8,
+                splitNumber: 10,
                 lineStyle: {
-                  color: '#6B9DD7',
+                  color: '#42E5FB',
+                  width: 1,
                 },
+                length: 8,
               },
               splitLine: {
-                distance: 4,
-                length: 10,
+                distance: 8,
+                length: 15,
                 lineStyle: {
                   width: 2,
-                  color: 'rgb(107,157,215)',
+                  color: '#42E5FB',
                 },
               },
-              detail: {
-                color: '#0c56eb',
-                fontSize: 16,
-              },
-              progress: {
-                show: true,
-                roundCap: true,
-                width: 8,
-              },
               axisLabel: {
-                color: '#ddd',
+                show: false,
                 fontSize: 12,
-                distance: 15,
               },
               itemStyle: {
-                color: '#0c56eb',
+                show: false,
               },
+              detail: {
+                show: false,
+                fontSize: 16,
+              },
+              title: {
+                show: false,
+              },
+              data: [],
               pointer: {
-                length: 100,
-                width: 6,
-                itemStyle: {
-                  borderWidth: 0,
+                show: false,
+              },
+            },
+            {
+              name: '仪表盘',
+              type: 'gauge',
+              radius: '70%',
+              z: 4,
+              axisLine: {
+                lineStyle: {
+                  color: [[1, 'rgba(0,0,0,0)']],
+                  width: 20,
+                },
+              },
+              axisLabel: {
+                show: false,
+              },
+              axisTick: {
+                show: false,
+              },
+              splitLine: {
+                show: false,
+              },
+              itemStyle: {
+                color: 'rgba(0,191,194,0.5)',
+              },
+              progress: {
+                width: 20,
+                show: true,
+              },
+              detail: {
+                offsetCenter: [0, 50],
+                textStyle: {
+                  padding: [0, 0, 0, 0],
+                  fontSize: 30,
+                  color: '#468EFD',
                 },
               },
               data: [
                 {
-                  value: 68,
+                  value: 47,
                 },
               ],
+              pointer: {
+                width: 3,
+                itemStyle: {
+                  borderWidth: 0,
+                },
+              },
             },
           ],
         },
-        // replaceMode: 1,
-        // theme: 'le-dark',
+        replaceMode: 1,
+        theme: 'le-dark',
       },
+    },
+  },
+];
+
+export const brainMap = [
+  {
+    key: 't-zhuti',
+    title: '主题',
+    data: {
+      name: 'mindNode',
+      text: '主题',
+      width: 180,
+      height: 45,
+      borderRadius: 0.5,
+      lineHeight: 1.5,
+      lineWidth: 1,
+    },
+  },
+  {
+    key: 't-zizhuti',
+    title: '子主题',
+    data: {
+      name: 'mindLine',
+      text: '子主题',
+      width: 144,
+      height: 36,
+      lineHeight: 1.5,
+      lineWidth: 1,
+    },
+  },
+];
+
+export const other_graphics = [
+  {
+    key: 'icon-wenduji',
+    title: '温度计',
+    data: {
+      name: 'thermometer',
+      width: 32,
+      height: 128,
+      background: '#FF5D3C33',
+      bkType: 0,
+      activeBacground: '#FF5D3C',
+      color: '#4583FF',
+      dash: 0,
+      disableAnchor: true,
+      fontSize: 12,
+      max: 20,
+      min: -20,
+      textColor: '#FFFFFFB3',
+      value: -10,
+      form: [
+        {
+          key: 'value',
+          name: '温度',
+          type: 'number',
+        },
+        {
+          key: 'min',
+          name: '最小值',
+          type: 'number',
+        },
+        {
+          key: 'max',
+          name: '最大值',
+          type: 'number',
+        },
+      ],
+    },
+  },
+  {
+    key: 'icon-liebiao',
+    title: '列表',
+    data: {
+      name: 'list',
+      background: '#282E3B',
+      width: 400,
+      height: 200,
+      textColor: '#FFFFFF66',
+      globalAlpha: 1,
+      headingColor: '#FFFFFFE6',
+      headingSize: 16,
+      dash: 0,
+      hoverTextColor: '#FFFFFF66',
+      shadow: false,
+      data: [
+        {
+          title: '列表标题',
+          description: '列表内容的描述性文字',
+        },
+        {
+          title: '列表标题',
+          description: '列表内容的描述性文字',
+        },
+        {
+          title: '列表标题',
+          description: '列表内容的描述性文字',
+        },
+      ],
+      props: {
+        custom: [
+          {
+            key: 'data',
+            label: '数据',
+            type: 'code',
+          },
+          {
+            key: 'background',
+            label: '背景颜色',
+            type: 'color',
+          },
+          {
+            key: 'headingSize',
+            label: '标题大小',
+            type: 'number',
+          },
+          {
+            key: 'headingColor',
+            label: '标题颜色',
+            type: 'color',
+          },
+        ],
+      },
+    },
+  },
+  {
+    key: 'icon-lunbo',
+    title: '水平轮播',
+    data: {
+      name: 'swiperline',
+      data: ['轮播第一次数据', '轮播第二次数据', '轮播第三次数据'],
+      width: 180,
+      height: 36,
+      hiddenText: true,
+      props: {
+        custom: [
+          {
+            key: 'data',
+            label: '数据',
+            type: 'code',
+          },
+          {
+            key: 'timeout',
+            label: '轮播时间',
+            type: 'number',
+          },
+        ],
+      },
+    },
+  },
+  {
+    title: '垂直轮播',
+    key: 'icon-lunboshezhi',
+    data: {
+      name: 'swiperline',
+      width: 200,
+      height: 24,
+      direction: 'vertical',
+      lineHeight: 2,
+      data: ['轮播第一次数据', '轮播第二次数据', '轮播第三次数据'],
+      hiddenText: true,
+      props: {
+        custom: [
+          {
+            key: 'data',
+            label: '数据',
+            type: 'code',
+          },
+          {
+            key: 'timeout',
+            label: '轮播时间',
+            type: 'number',
+          },
+        ],
+      },
+    },
+  },
+  {
+    title: '球形水位',
+    key: 't-shuiliujianceqi',
+    fontFamily: 't-icon',
+    data: {
+      name: 'watermeter',
+      width: 128,
+      height: 128,
+      disableAnchor: !0,
+      background: '#4583FF',
+      value: 50,
+      max: 70,
+      min: 20,
+      maxBackground: '#f5222d',
+      minBackground: '#52c41a',
+      scaleShow: !1,
+    },
+  },
+  {
+    title: '圆柱水位',
+    key: 't-db',
+    fontFamily: 't-icon',
+    data: {
+      name: 'waterTank',
+      width: 128,
+      height: 128,
+      disableAnchor: !0,
+      color: '#FFFFFF00',
+      progress: 0.5,
+      progressColor: '#4583FF',
     },
   },
 ];

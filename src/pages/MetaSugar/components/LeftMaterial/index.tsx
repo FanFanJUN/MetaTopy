@@ -9,14 +9,14 @@ import styles from './index.less';
 
 const LeftMaterial = () => {
   const [state, setState] = useSetState({
-    activeTab: 'system',
+    activeTab: 'graphics',
     expandKeys: [],
   });
   const { meta2d } = useMeta();
 
   useEffect(() => {
     const expList = TAB_LIST.filter((item) => item.key === state.activeTab)?.[0]
-      .list.filter((sItem) => sItem?.expand)
+      ?.list.filter((sItem) => sItem?.expand)
       ?.map((d) => d.key);
     setState({ expandKeys: expList });
   }, [state.activeTab]);
@@ -93,10 +93,13 @@ const LeftMaterial = () => {
                         title={icon.title}
                       >
                         <i
-                          className={`${item.fontFamily} ${key}`}
+                          className={`${
+                            icon.fontFamily || item.fontFamily
+                          } ${key}`}
                           title={title}
                           {...dragEventResolve(meta2d, data)}
                         ></i>
+                        <span className={styles.desc}>{title}</span>
                       </div>
                     );
                   })}
@@ -116,7 +119,7 @@ const LeftMaterial = () => {
   };
 
   const _renderComp = () => {
-    const list = keyBy(TAB_LIST, 'key')[state.activeTab].list;
+    const list = keyBy(TAB_LIST, 'key')[state.activeTab]?.list || [];
     return _renderList(list);
   };
 

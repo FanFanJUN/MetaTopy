@@ -1,4 +1,13 @@
 import _, { isNil } from 'lodash';
+import {
+  Beeline,
+  Calendar,
+  List,
+  Swiperline,
+  Thermometer,
+  WaterMeter,
+  WaterTank,
+} from './components/registerComp';
 import { IMeta } from './context';
 
 /**
@@ -69,3 +78,19 @@ export async function onWaitPromise(time = 500) {
     }, time);
   });
 }
+
+/**
+ * @description 其他注册组件 name 组件在画布中的名称 唯一
+ * @param meta2d
+ */
+export const registerCustomDraw = (meta2d: IMeta) => {
+  meta2d.registerCanvasDraw({
+    beeline: Beeline,
+    thermometer: Thermometer,
+    calendar: Calendar,
+    list: List,
+    swiperline: Swiperline,
+    watermeter: WaterMeter,
+    waterTank: WaterTank,
+  });
+};

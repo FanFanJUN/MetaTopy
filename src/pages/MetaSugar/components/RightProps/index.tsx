@@ -16,7 +16,7 @@ const Meta2dProps: React.FunctionComponent<IMeta2dPropsProps> = (props) => {
       case 'node':
         return <NodeComponent />; // 画布pen属性设置
       case 'line':
-        return <h1>line</h1>;
+        return <NodeComponent />;
       case 'multi':
         return <h1>multi</h1>;
       default:

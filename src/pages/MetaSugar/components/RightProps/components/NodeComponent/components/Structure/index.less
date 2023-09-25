@@ -1,0 +1,24 @@
+.structureWrap {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  &__item {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    &:hover {
+      color: #1890ff;
+    }
+    &__left {
+      span {
+        margin-right: 8px;
+      }
+    }
+    &__right {
+      span {
+        cursor: pointer;
+        margin-left: 4px;
+      }
+    }
+  }
+}

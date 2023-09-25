@@ -67,9 +67,20 @@
               }
             }
             &__item {
-              flex: 0 0 25%;
+              flex: 0 0 32.9%;
               display: flex;
+              flex-direction: column;
               align-items: center;
+              .desc {
+                text-overflow: ellipsis;
+                transform: scale(0.83);
+                white-space: nowrap;
+                margin: 0px auto;
+                justify-content: center;
+                overflow: hidden;
+                max-width: 50px;
+                font-size: 10px;
+              }
               cursor: pointer;
               i {
                 font-size: 25px;
