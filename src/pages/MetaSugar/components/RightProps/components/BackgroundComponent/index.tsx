@@ -5,6 +5,7 @@ import { useDeepCompareEffect, useSetState, useUpdate } from 'ahooks';
 import { Input, InputNumber, Switch } from 'antd';
 import _ from 'lodash';
 import React from 'react';
+import { LayOut } from '../MultiComponent/components';
 import { Structure } from '../NodeComponent/components';
 import { TAB_LIST } from './helper';
 import styles from './index.less';
@@ -214,6 +215,8 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
         return _renderCanvas();
       case 'structure':
         return <Structure />;
+      case 'layout':
+        return <LayOut />;
       default:
         break;
     }

@@ -24,21 +24,43 @@ const Structure: React.FunctionComponent<IAppProps> = (props) => {
     }
   };
   const _setValue = (type: string, item: Pen) => {
-    meta2d.setValue({
-      id: item.id,
-      [type]: getValue(type, item),
-    });
+    if (item.name === 'combine') {
+      if (item.children?.length) {
+        item.children.forEach((item) => {
+          const currentPen = meta2d.findOne(item);
+          meta2d.setValue({
+            id: item,
+            [type]: getValue(type, currentPen),
+          });
+        });
+      }
+    } else {
+      meta2d.setValue({
+        id: item.id,
+        [type]: getValue(type, item),
+      });
+    }
     meta2d.render();
     update();
   };
 
   const _renderStructure = () => {
     const pens = meta2d.store.data.pens;
+    // 组合pen 过滤
+    const childPens: string[] = [];
+    pens.forEach((item) => {
+      if (item?.children?.length) {
+        childPens.push(...item.children);
+      }
+    });
     const activePen = meta2d.store.active?.[0] || {};
     if (pens.length) {
       return (
         <div className={styles.structureWrap}>
           {pens.map((item) => {
+            if (childPens.some((i) => i === item.id)) {
+              return null;
+            }
             return (
               <div
                 key={item.id}
@@ -47,6 +69,8 @@ const Structure: React.FunctionComponent<IAppProps> = (props) => {
                   color: !(activePen.id === item.id) ? '' : '#1890ff',
                 }}
                 onClick={() => {
+                  const pen = meta2d.findOne(item.id);
+                  meta2d.gotoView(pen);
                   meta2d.active([item]);
                   meta2d.render();
                 }}

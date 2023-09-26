@@ -1,42 +1,24 @@
-import { useMeta } from '@/pages/MetaSugar/context';
 import { useSetState } from 'ahooks';
 import React from 'react';
-import {
-  Animate,
-  Events,
-  LineAnimate,
-  PenParam,
-  Show,
-  Structure,
-} from './components';
+import { Structure } from '../NodeComponent/components';
+import { LayOut, Outward } from './components';
 import { TAB_LIST } from './helper';
 import styles from './index.less';
 interface IAppProps {}
 
 const NodeComponent: React.FunctionComponent<IAppProps> = (props) => {
-  const { meta2d } = useMeta();
   const [state, setState] = useSetState({
-    activeTab: 'show',
+    activeTab: 'outward',
   });
 
   const _renderContent = () => {
     switch (state.activeTab) {
-      case 'show':
-        return <Show />;
-      // pen data
-      case 'data':
-        return <PenParam />;
+      case 'outward':
+        return <Outward />;
+      case 'layout':
+        return <LayOut />;
       case 'struct':
         return <Structure />;
-      case 'animation': {
-        const activePenName = meta2d.store.active?.[0].name;
-        if (activePenName === 'line') {
-          return <LineAnimate />;
-        }
-        return <Animate />;
-      }
-      case 'event':
-        return <Events />;
       default:
         break;
     }

@@ -3,13 +3,13 @@ import ColorPicker from '@/pages/component/ColorPicker';
 import { ArrowDownOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useSetState } from 'ahooks';
 import { Input, InputNumber, Select, Switch } from 'antd';
-import { cloneDeep, map, round } from 'lodash';
+import { keyBy, map, round } from 'lodash';
 import React from 'react';
-import { Show_List } from './helper';
+import { Buttons, SelectOptions, Show_List } from './helper';
 import styles from './index.less';
 interface IAppProps {}
 
-const Show: React.FunctionComponent<IAppProps> = (props) => {
+const Animate: React.FunctionComponent<IAppProps> = (props) => {
   const [state, setState] = useSetState({
     activeTab: 'system',
     expandKeys: map(Show_List, 'toolKey'),
@@ -19,39 +19,20 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
   const { meta2d } = useMeta();
 
   const _handleChange = (value: any, values: any, tKey: string) => {
-    const penOption = { id: values.id, [tKey]: value ?? undefined };
-    if (tKey === 'dash') {
-      const dashOption = {
-        1: [5, 5],
-        2: [10, 10],
-        3: [10, 10, 2, 10],
-      };
+    const penOption = {
+      id: values.id,
+      [tKey]: value,
+    };
+    if (tKey === 'animateCycle') {
       Object.assign(penOption, {
-        dash: value,
-        lineDash: dashOption[value] || undefined,
+        animateCycle: value || Infinity,
       });
-    } else if (tKey === 'decorationDash') {
-      const dashOption = {
-        1: [5, 5],
-        2: [10, 10],
-        3: [10, 10, 2, 10],
-      };
+    } else if (tKey === 'animateType') {
       Object.assign(penOption, {
-        decorationDash: value,
-        textDecorationDash: dashOption[value] || undefined,
-      });
-    } else if (tKey === 'textStrickoutDashNum') {
-      const dashOption = {
-        1: [5, 5],
-        2: [10, 10],
-        3: [10, 10, 2, 10],
-      };
-      Object.assign(penOption, {
-        textStrickoutDashNum: value,
-        textStrickoutDash: dashOption[value] || undefined,
+        showDuration: keyBy(SelectOptions, 'value')?.[value]?.durationTime,
       });
     }
-    meta2d.setValue(penOption);
+    meta2d.setValue({ ...penOption });
     meta2d.render();
     setState({ fresh: state.fresh + 1 });
   };
@@ -90,22 +71,13 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
         />
       );
     } else if (item.type === 'select') {
-      let options = cloneDeep(item.options || []);
-      if (values.name === 'combine' && values?.children?.length) {
-        values?.children?.forEach((item, index) => {
-          options.push({
-            label: `状态${index + 1}`,
-            value: index,
-          });
-        });
-      }
       return (
         <Select
           value={values?.[item.toolKey] ?? item.x}
           style={{ width: '100%' }}
           onChange={(e) => _handleChange(e, values, item.toolKey)}
         >
-          {options.map((o) => {
+          {item.options.map((o) => {
             return (
               <Select.Option value={o.value} key={o.value}>
                 {o.label}
@@ -124,22 +96,13 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
         />
       );
     }
-    return <Input />;
+    return <Input value={values?.[item.toolKey]} />;
   };
 
   const _renderContent = (obj: any) => {
     switch (obj.toolKey) {
-      case 'basic':
-      case 'disable':
-      case 'text':
-      case 'style':
+      case 'animate':
         return obj.cList.map((item) => {
-          const values = meta2d.store.active?.[0] || {};
-          if (item.uiHidden) {
-            if (item.uiHidden(values)) {
-              return null;
-            }
-          }
           return (
             <div className={styles.showWrap_item_clist} key={item.toolKey}>
               <span style={{ color: '#7f838c', fontSize: '12px' }}>
@@ -164,6 +127,36 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
     setState({ expandKeys: fList });
   };
 
+  const _handleStart = (tKey: string) => {
+    const currentObj = keyBy(SelectOptions, 'value');
+    const activePen = meta2d?.store?.active?.[0];
+    meta2d.setValue({
+      id: activePen?.id,
+      frames: currentObj[activePen?.animateType].animate,
+    });
+    meta2d.render();
+    meta2d?.[tKey](meta2d?.store?.active);
+    setState({ fresh: state.fresh + 1 });
+  };
+
+  const _renderButtons = () => {
+    return (
+      <div className={styles.buttons}>
+        {Buttons.map((item) => {
+          return (
+            <div
+              data-button={item.toolKey}
+              key={item.toolKey}
+              onClick={() => _handleStart(item.toolKey)}
+            >
+              {item.name}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className={styles.showWrap}>
       {Show_List.map((item) => {
@@ -179,7 +172,12 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
                 {isShow ? <ArrowDownOutlined /> : <ArrowRightOutlined />}
               </span>
             </div>
-            {isShow && <>{_renderContent(item)}</>}
+            {isShow && (
+              <>
+                {_renderContent(item)}
+                {_renderButtons()}
+              </>
+            )}
           </div>
         );
       })}
@@ -187,4 +185,4 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
   );
 };
 
-export default Show;
+export default Animate;

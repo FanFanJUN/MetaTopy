@@ -3,6 +3,20 @@ import { ReactComponent as S2 } from '@/assets/svg/lineStyle/2.svg';
 import { ReactComponent as S3 } from '@/assets/svg/lineStyle/3.svg';
 import { ReactComponent as S4 } from '@/assets/svg/lineStyle/4.svg';
 
+const FamilyList = [
+  'sans-serif',
+  'monospace',
+  'cursive',
+  'fantasy',
+  'system-ui',
+  'emoji',
+  'math',
+  'fangsong',
+  '宋体',
+  '微软雅黑',
+  '黑体',
+];
+
 export const Show_List = [
   {
     name: '位置和大小',
@@ -37,6 +51,58 @@ export const Show_List = [
         toolKey: 'borderRadius',
         type: 'inputNumber',
       },
+      {
+        name: '旋转',
+        toolKey: 'rotate',
+        type: 'inputNumber',
+      },
+      {
+        name: '内边距(左)',
+        toolKey: 'paddingLeft',
+        type: 'inputNumber',
+      },
+      {
+        name: '内边距(右)',
+        toolKey: 'paddingRight',
+        type: 'inputNumber',
+      },
+      {
+        name: '内边距(上)',
+        toolKey: 'paddingTop',
+        type: 'inputNumber',
+      },
+      {
+        name: '内边距(下)',
+        toolKey: 'paddingBottom',
+        type: 'inputNumber',
+      },
+      {
+        name: '状态',
+        toolKey: 'showChild',
+        type: 'select',
+        options: [{ value: undefined, label: '无' }],
+        uiHidden: (value: any) => {
+          return value?.name !== 'combine' || !value?.children?.length;
+        },
+      },
+      {
+        name: '进度',
+        toolKey: 'progress',
+        type: 'inputNumber',
+        compConf: {
+          max: 1,
+          min: 0,
+          step: 0.01,
+        },
+      },
+      {
+        name: '进度颜色',
+        toolKey: 'progressColor',
+        type: 'colorPicker',
+      },
+      { name: '垂直进度', toolKey: 'verticalProgress', type: 'switch' },
+      { name: '水平翻转', toolKey: 'flipX', type: 'switch' },
+      { name: '垂直翻转', toolKey: 'flipY', type: 'switch' },
     ],
   },
   {
@@ -79,6 +145,11 @@ export const Show_List = [
         name: '透明度',
         toolKey: 'globalAlpha',
         type: 'inputNumber',
+        compConf: {
+          max: 1,
+          min: 0,
+          step: 0.1,
+        },
       },
       {
         name: '鼠标经过颜色',
@@ -91,6 +162,12 @@ export const Show_List = [
     name: '文字',
     toolKey: 'text',
     cList: [
+      /* {
+        name: '字体名',
+        toolKey: 'fontFamily',
+        type: 'select',
+        options: map(FamilyList, (n) => ({ value: n, label: n })),
+      }, */
       {
         name: '文本内容',
         toolKey: 'text',
@@ -110,6 +187,53 @@ export const Show_List = [
         name: '隐藏文字',
         toolKey: 'hiddenText',
         type: 'switch',
+      },
+      {
+        name: '保留小数',
+        toolKey: 'keepDecimal',
+        type: 'inputNumber',
+      },
+      {
+        name: '下划线',
+        toolKey: 'textDecoration',
+        type: 'switch',
+      },
+      {
+        name: '下划线颜色',
+        toolKey: 'textDecorationColor',
+        type: 'colorPicker',
+      },
+      {
+        name: '下划线样式',
+        toolKey: 'decorationDash',
+        type: 'select',
+        options: [
+          { value: 0, label: <S1 /> },
+          { value: 1, label: <S2 /> },
+          { value: 2, label: <S3 /> },
+          { value: 3, label: <S4 /> },
+        ],
+      },
+      {
+        name: '删除线',
+        toolKey: 'textStrickout',
+        type: 'switch',
+      },
+      {
+        name: '删除线颜色',
+        toolKey: 'textStrickoutColor',
+        type: 'colorPicker',
+      },
+      {
+        name: '删除线样式',
+        toolKey: 'textStrickoutDashNum',
+        type: 'select',
+        options: [
+          { value: 0, label: <S1 /> },
+          { value: 1, label: <S2 /> },
+          { value: 2, label: <S3 /> },
+          { value: 3, label: <S4 /> },
+        ],
       },
       {
         name: '水平对齐',

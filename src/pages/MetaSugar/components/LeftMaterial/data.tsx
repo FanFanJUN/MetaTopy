@@ -115,6 +115,20 @@ export const icons_common = [
       externElement: true,
     },
   },
+  {
+    key: 'icon-jian_sekuai',
+    title: '区域块',
+    fontFamily: 'meta',
+    data: {
+      name: 'rectangle',
+      width: 80,
+      height: 20,
+      lineHeight: 1.5,
+      lineWidth: 0,
+      background: 'green',
+      borderRadius: 20,
+    },
+  },
 ];
 
 export const icons_basic = [

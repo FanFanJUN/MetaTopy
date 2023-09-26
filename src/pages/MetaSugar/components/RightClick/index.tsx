@@ -1,17 +1,16 @@
-import { useEffect } from 'react';
-import { useState, useRef } from 'react';
-import type { FloatMenuProps } from './helper';
-import {
-  FLOAT_ENUM,
-  FLOAT_CANVAS,
-  FLOAT_ONE,
-  FLOAT_OR,
-  FLOAT_ID_ENUM,
-} from './helper';
-import styles from './index.less';
 import type { Pen } from '@meta2d/core';
 import { useClickAway } from 'ahooks';
+import { useEffect, useRef, useState } from 'react';
 import { useMeta } from '../../context';
+import type { FloatMenuProps } from './helper';
+import {
+  FLOAT_CANVAS,
+  FLOAT_ENUM,
+  FLOAT_ID_ENUM,
+  FLOAT_ONE,
+  FLOAT_OR,
+} from './helper';
+import styles from './index.less';
 
 function RightClickFloat(props) {
   const [isShow, setShow] = useState(false);
@@ -135,6 +134,7 @@ function RightClickFloat(props) {
   const menuClick = (slide: FloatMenuProps) => {
     const activeChildrenL = meta2d?.store?.active[0]?.children?.length > 1,
       activeL = meta2d?.store?.active?.length < 2;
+    const activePens = meta2d?.store?.active || [];
     switch (slide?.id) {
       case FLOAT_ID_ENUM.top:
         pensList(FLOAT_ID_ENUM.top, 'single');
@@ -176,6 +176,9 @@ function RightClickFloat(props) {
         break;
       case FLOAT_ID_ENUM.lock:
         pensList(FLOAT_ID_ENUM.lock, 'attribute');
+        break;
+      case FLOAT_ID_ENUM.makeupStatus:
+        meta2d.combine(activePens, 0); // meta2d.combine(pens, showChild)若组合成状态，showChild 必填
         break;
       default:
         break;

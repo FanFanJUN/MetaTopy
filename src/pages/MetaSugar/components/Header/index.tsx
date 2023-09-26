@@ -1,17 +1,19 @@
 import { deepClone } from '@meta2d/core';
 import { parseSvg } from '@meta2d/svg';
-import { useSetState } from 'ahooks';
-import { Dropdown, InputNumber, MenuProps, message } from 'antd';
+import { useSetState, useUpdate } from 'ahooks';
+import { Dropdown, InputNumber, message } from 'antd';
 import * as FileSaver from 'file-saver';
+import { keyBy } from 'lodash';
 import React, { useEffect } from 'react';
 import { history } from 'umi';
 import { useMeta } from '../../context';
-import { TOOL_LIST, savePreviewData } from './helper';
+import { SelectOption, TOOL_LIST, savePreviewData } from './helper';
 import styles from './index.less';
 
 interface IHeaderProps {}
 
 const Header: React.FunctionComponent<IHeaderProps> = (props) => {
+  const update = useUpdate();
   const { meta2d } = useMeta();
   const [state, setState] = useSetState({
     activeToolKey: '',
@@ -100,13 +102,28 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
     meta2d.drawLine();
   };
 
-  const _handleOp = (type: string) => {
+  const _handleOp = (type: string, value?: any) => {
+    const currentObj = meta2d.store.data ?? {};
+    if (type === 'lockStatus') {
+      const { locked = 0 } = currentObj;
+      const lockStatus = {
+        0: 1,
+        1: 2,
+        2: 0,
+      };
+      meta2d.lock(lockStatus[locked]);
+      meta2d.render();
+      update();
+      return;
+    }
     const isActive = state.activeToolKey === type;
+    // if (![...map(SelectOption, 'key')].some((item) => item === type) || !boo) {
     if (!isActive) {
       setState({ activeToolKey: type });
     } else {
       setState({ activeToolKey: '' });
     }
+    // }
     switch (type) {
       case 'ditu':
         if (isActive) {
@@ -127,7 +144,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
           meta2d.drawLine();
         } else {
           meta2d.stopPencil();
-          meta2d.drawLine('curve');
+          meta2d.drawLine(meta2d?.store?.options?.drawingLineName);
         }
         break;
       case 'qianbi':
@@ -175,24 +192,81 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         savePreviewData(JSON.stringify(meta2d.data()));
         history.push('/preview');
         break;
+      // eslint-disable-next-line no-duplicate-case
+      case 'curve2':
+        meta2d.setOptions({ drawingLineName: value });
+        resetEvent();
+        update();
+        break;
+      case 'fromArrow':
+        {
+          meta2d.store.data.fromArrow = value;
+          resetEvent();
+          update();
+        }
+        break;
+      case 'toArrow':
+        {
+          meta2d.store.data.toArrow = value;
+          resetEvent();
+          update();
+        }
+        break;
       default:
         break;
     }
   };
 
-  const _handleMenuClick: MenuProps['onClick'] = (e) => {
-    _handleOp(e.key);
+  const _handleMenuClick = (e: any, tKey: string) => {
+    if (tKey === 'folder') {
+      _handleOp(e.key);
+      return;
+    }
+    e.key && _handleOp(tKey, e.key);
   };
 
   const renderIcon = (item: any) => {
+    const currentObj = meta2d?.store?.data ?? {};
     if (item.oComp) {
       switch (item.toolKey) {
+        case 'lockStatus': {
+          const lockIcon = {
+            0: 'unlock',
+            1: 'lock',
+            2: 'wufayidong',
+          };
+          return (
+            <i className={`t-icon t-${lockIcon[currentObj?.locked ?? 0]}`} />
+          );
+        }
         case 'xiankuan':
           return (
             <span className={styles.topItem__value}>{state.lineWidth}</span>
           );
         case 'fitView':
           return <div className={styles[`topItem__${item.toolKey}`]} />;
+        case 'curve2':
+          {
+            const currentLineObj = keyBy(SelectOption, 'key')?.[
+              meta2d?.store?.options?.drawingLineName
+            ];
+            const lineName = currentLineObj?.iconKey || currentLineObj?.key;
+            return <i className={`t-icon t-${lineName}`} />;
+          }
+          break;
+        case 'fromArrow':
+        case 'toArrow': {
+          const aObj = {
+            fromArrow: 'from',
+            toArrow: 'to',
+          };
+          const name = currentObj?.[`${aObj[item.toolKey]}Arrow`];
+          const lineName =
+            currentObj?.iconKey ||
+            (name && `t-${aObj[item.toolKey]}-${name}`) ||
+            't-line';
+          return <i className={`t-icon ${lineName}`} />;
+        }
         default:
           break;
       }
@@ -205,19 +279,45 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
       <div className={styles.header__middle}>
         {TOOL_LIST.map((item) => {
           if (item.isSplit) {
-            return <div className={styles.header__middle__split} />;
+            return (
+              <div
+                key={item.toolKey}
+                className={styles.header__middle__split}
+              />
+            );
           }
+          const currentObj = meta2d?.store?.data ?? {};
+          const showName = () => {
+            if (item.toolKey === 'lockStatus') {
+              const showNameObj = {
+                0: '编辑',
+                1: '预览',
+                2: '锁定',
+              };
+              return showNameObj[currentObj.locked ?? 0];
+            }
+            return item.name;
+          };
           const comp = (
             <div
               key={item.toolKey}
               onClick={(e) => {
-                if (['folder', 'xiankuan'].includes(item.toolKey)) {
+                if (
+                  [
+                    'folder',
+                    'xiankuan',
+                    'fromArrow',
+                    'toArrow',
+                    'curve2',
+                  ].includes(item.toolKey)
+                ) {
                   e.preventDefault();
                   return;
                 }
                 _handleOp(item.toolKey);
               }}
               data-toolKey={item.toolKey}
+              data-canvaslock={currentObj.locked ?? 0}
               className={`${styles.header__middle__item}`}
               data-isDivider={item.toolKey.includes('divider_T')}
               style={
@@ -228,7 +328,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               }
             >
               <div className={styles.topItem}>
-                {renderIcon(item)}
+                {meta2d && renderIcon(item)}
                 {(item.dropdown && (
                   <i
                     className={`t-icon t-triangle-down`}
@@ -237,7 +337,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
                 )) ||
                   null}
               </div>
-              <span className={styles.itemName}>{item.name}</span>
+              <span className={styles.itemName}>{showName()}</span>
             </div>
           );
           if (item.dropdown) {
@@ -247,14 +347,14 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               Object.assign(dropDownObj, {
                 menu: {
                   items,
-                  onClick: _handleMenuClick,
+                  onClick: (e: any) => _handleMenuClick(e, item.toolKey),
                 },
               });
             } else if (type === 'input') {
               Object.assign(dropDownObj, {
                 dropdownRender: () => {
                   return (
-                    <div className={styles.dropdown__renderInput} v>
+                    <div className={styles.dropdown__renderInput}>
                       <InputNumber
                         value={state.lineWidth}
                         step={1}

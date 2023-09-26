@@ -27,6 +27,14 @@
       flex-direction: column;
       align-items: center;
       margin-right: 30px;
+      &[data-toolKey='lockStatus'] {
+        &[data-canvaslock='1'] {
+          color: #faad14;
+        }
+        &[data-canvaslock='2'] {
+          color: #f50000;
+        }
+      }
       &[data-toolKey='attention'] {
         margin-right: 0;
       }
@@ -108,5 +116,11 @@
     [class~='ant-input-number'] {
       width: 100%;
     }
+  }
+  .lineWrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 120px;
   }
 }

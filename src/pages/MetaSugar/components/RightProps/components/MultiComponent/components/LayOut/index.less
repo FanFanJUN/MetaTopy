@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 12px 0;
+  &_content {
+    display: flex;
+    flex-direction: column;
+    [data-item] {
+      font-size: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      [class~='ant-input-number'] {
+        width: 120px;
+      }
+    }
+  }
+}

@@ -19,6 +19,7 @@ const App = () => {
    * @params {object} data - 节点数据
    */
   const onMessage = (event: any, data: any) => {
+    // console.log(event, data);
     if (data?.length === 0) {
       setState({
         type: 'default',
@@ -39,6 +40,8 @@ const App = () => {
             setState({ type: 'node', selected: true, selectedData: data[0] });
           }
         } else {
+          console.log(data);
+
           setState({ type: 'multi', selected: true, multiData: data });
         }
         break;
@@ -71,7 +74,7 @@ const App = () => {
       }}
     >
       <div className={styles.home}>
-        <Header />
+        {meta2d && <Header />}
         <div className={styles.home__container}>
           {/* 左侧画布pen */}
           <LeftMaterial />

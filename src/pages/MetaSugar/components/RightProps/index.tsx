@@ -1,5 +1,9 @@
 import React, { useMemo } from 'react';
-import { BackgroundComponent, NodeComponent } from './components';
+import {
+  BackgroundComponent,
+  MultiComponent,
+  NodeComponent,
+} from './components';
 import styles from './index.less';
 
 interface IMeta2dPropsProps {
@@ -18,7 +22,7 @@ const Meta2dProps: React.FunctionComponent<IMeta2dPropsProps> = (props) => {
       case 'line':
         return <NodeComponent />;
       case 'multi':
-        return <h1>multi</h1>;
+        return <MultiComponent />;
       default:
         return <BackgroundComponent />; // 画布属性设置
     }

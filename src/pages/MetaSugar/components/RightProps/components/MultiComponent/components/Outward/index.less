@@ -1,0 +1,25 @@
+.outward {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 12px 0;
+  [data-item] {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+    & > header {
+      font-size: 12px;
+    }
+    [data-clist] {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      [data-li] {
+        display: flex;
+        i {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

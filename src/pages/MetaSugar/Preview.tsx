@@ -1,5 +1,6 @@
 import React from 'react';
 import { MainMeta } from './container';
+// import emitter from "#/utils/events.js";
 
 interface IAppProps {}
 
