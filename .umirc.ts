@@ -35,6 +35,18 @@ export default defineConfig({
       charset: 'utf-8',
       href: '/icon/basic/iconfont.css', // 通用icon
     },
+    {
+      rel: 'stylesheet',
+      type: 'text/css',
+      charset: 'utf-8',
+      href: '/icon/组态图标/iconfont.css', // 组态图标meta
+    },
+    {
+      rel: 'stylesheet',
+      type: 'text/css',
+      charset: 'utf-8',
+      href: '/icon/l-icon/iconfont.css', // l-icon
+    },
   ],
   scripts: [
     { src: `/canvas2svg.js` },
