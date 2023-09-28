@@ -7,8 +7,17 @@ import ReactJson from 'react-json-view';
 import { list } from './helper';
 import styles from './index.less';
 
-const exceptParam = ['name', 'width', 'height', 'x', 'y', 'id'];
-interface IAppProps {}
+const exceptParam = [
+  'name',
+  'width',
+  'height',
+  'x',
+  'y',
+  'id',
+  'ex',
+  'ey',
+  'center',
+];
 
 function isJSON(str) {
   if (typeof str === 'string') {
@@ -26,7 +35,7 @@ function isJSON(str) {
   return false;
 }
 
-const PenParam: React.FunctionComponent<IAppProps> = (props) => {
+const PenParam: React.FunctionComponent = () => {
   const { meta2d } = useMeta();
   const [state, setState] = useSetState({ jStr: '' });
   const update = useUpdate();

@@ -1,15 +1,19 @@
 .backgroundComponent {
   height: 100%;
+
   .tab {
     height: 42px;
     padding: 10px 0 0 16px;
     display: flex;
     border-bottom: 1px solid #e5dfdf;
+
     .tabItem {
       margin-right: 16px;
       position: relative;
-      &.tabItem__active {
+
+      &.active {
         color: #1890ff;
+
         &::after {
           content: '';
           position: absolute;
@@ -23,12 +27,15 @@
       }
     }
   }
+
   .content {
     padding: 8px 5px;
     overflow: auto;
     height: calc(100% - 52px);
+
     &__item {
       position: relative;
+
       &::after {
         content: '';
         border-bottom: 1px solid #d9d9d9;
@@ -38,6 +45,7 @@
         position: absolute;
         z-index: 2;
       }
+
       header {
         display: flex;
         justify-content: space-between;
@@ -47,40 +55,47 @@
         font-weight: 600;
         line-height: 22px;
       }
+
       &__pro {
         [class^='selectwrap'] {
           width: 120px !important;
         }
+
         [class='el-color-picker'] {
           [class~='el-color-dropdown'] {
             right: 0;
           }
         }
+
         [class~='ant-input-number'] {
           width: 125px;
-          border: 1px solid transparent;
+
           &[class~='ant-input-number-focused'] {
             box-shadow: none;
           }
+
           &:hover {
             border-color: #1890ff;
           }
         }
+
         & > span {
           font-size: 12px;
           font-weight: 400;
           color: #7f838c;
-          letter-spacing: 0px;
+          letter-spacing: 0;
           white-space: nowrap;
           width: 100px;
           overflow: hidden;
           text-overflow: ellipsis;
         }
+
         display: flex;
         justify-content: space-between;
-        padding: 9px 0px;
+        padding: 9px 0;
         align-items: center;
       }
+
       .keyBor {
         ul {
           padding-left: 16px;
@@ -89,21 +104,26 @@
         }
       }
     }
+
     .structureWrap {
       display: flex;
       flex-direction: column;
+
       &__item {
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
+
         &:hover {
           color: #1890ff;
         }
+
         &__left {
           span {
             margin-right: 8px;
           }
         }
+
         &__right {
           span {
             cursor: pointer;

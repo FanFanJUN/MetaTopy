@@ -46,11 +46,11 @@ function Uve(t, e, n, r) {
     c,
     u,
     f = Math.round,
-    d = typeof n == 'string';
-  return typeof t != 'number' ||
+    d = typeof n === 'string';
+  return typeof t !== 'number' ||
     t < -1 ||
     t > 1 ||
-    typeof e != 'string' ||
+    typeof e !== 'string' ||
     (e[0] != 'r' && e[0] != '#') ||
     (n && !d) ||
     ((u = e.length > 9),

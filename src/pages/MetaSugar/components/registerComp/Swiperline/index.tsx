@@ -65,16 +65,16 @@ function Sd(t, e) {
   );
 }
 function Fd(t) {
-  var e;
+  let e;
   (e = t.onDestroy) == null || e.call(t, t);
 }
 function Id(t) {
-  var e;
+  let e;
   (e = t.onAdd) == null || e.call(t, t);
 }
 
 export default function Ad(t, e) {
-  var u;
+  let u;
   e.onAdd ||
     ((e.onAdd = pd),
     (e.onDestroy = Cd),

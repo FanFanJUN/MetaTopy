@@ -9,9 +9,8 @@ import { LayOut } from '../MultiComponent/components';
 import { Structure } from '../NodeComponent/components';
 import { TAB_LIST } from './helper';
 import styles from './index.less';
-interface IAppProps {}
 
-const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
+const BackgroundComponent: React.FunctionComponent = () => {
   const [state, setState] = useSetState({
     activeTab: _.head(TAB_LIST)?.key,
     expandKeys: ['canvas'],
@@ -25,6 +24,12 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
 
   const _handleChange = (type: string, value?: any, checked?: boolean) => {
     switch (type) {
+      case 'width':
+        meta2d.store.data.width = value ?? 1920;
+        break;
+      case 'height':
+        meta2d.store.data.height = value ?? 1080;
+        break;
       case 'grid':
         meta2d.setGrid({
           grid: checked,
@@ -109,6 +114,28 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
                 }
               />
             </div>
+            {meta2d?.isScreen() ? (
+              <>
+                <div className={styles.content__item__pro}>
+                  <span>画布(W)</span>
+                  <InputNumber
+                    value={data?.width}
+                    onChange={(value?: number | undefined) =>
+                      _handleChange('width', value, undefined)
+                    }
+                  />
+                </div>
+                <div className={styles.content__item__pro}>
+                  <span>画布(H)</span>
+                  <InputNumber
+                    value={data?.height}
+                    onChange={(value?: number | undefined) =>
+                      _handleChange('height', value, undefined)
+                    }
+                  />
+                </div>
+              </>
+            ) : null}
             <div className={styles.content__item__pro}>
               <span>画笔填充颜色</span>
               <ColorPicker
@@ -229,7 +256,7 @@ const BackgroundComponent: React.FunctionComponent<IAppProps> = (props) => {
           return (
             <div
               className={`${styles.tabItem} ${
-                state.activeTab === item.key ? styles.tabItem__active : ''
+                state.activeTab === item.key ? styles.active : ''
               }`}
               key={item.key}
               onClick={() => {

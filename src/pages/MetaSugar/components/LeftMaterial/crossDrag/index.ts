@@ -1,14 +1,15 @@
-import { Pen, deepClone } from '@meta2d/core';
+import type { Pen } from '@meta2d/core';
+import { deepClone } from '@meta2d/core';
 import { Modal } from 'antd';
-import { DragEvent } from 'react';
-import { IMeta } from './../../../context';
+import type { DragEvent } from 'react';
+import type { IMeta } from './../../../context';
 
 export let currentDrag: Pen | null = null;
-export const dragEventResolve = function (meta2d: IMeta, item: Pen) {
+export const dragEventResolve = function (meta2d: IMeta, item: Pen | object) {
   const sugar = document.getElementById('iMeta2d');
   return {
     draggable: true,
-    onDragStart: (e) => {
+    onDragStart: () => {
       currentDrag = item;
       if (sugar) {
         sugar.setAttribute('data-mark', 'move');
@@ -23,7 +24,7 @@ export const dragEventResolve = function (meta2d: IMeta, item: Pen) {
         sugar.setAttribute('data-mark', 'noMove');
       }
     },
-    onDoubleClick: (e: React.MouseEvent) => {},
+    onDoubleClick: () => {},
   };
 };
 
@@ -38,6 +39,11 @@ export const containerDragResolve = (meta2d: IMeta) => {
       e.preventDefault();
     },
     onDrop: (e: DragEvent<HTMLDivElement>) => {
+      // 模板open
+      if (currentDrag?.isTemplate) {
+        meta2d.open(currentDrag);
+        return;
+      }
       // 偏移量
       const { x, y, scale } = meta2d.store.data;
       const offsetX = Math.round(e.nativeEvent.offsetX) - x;

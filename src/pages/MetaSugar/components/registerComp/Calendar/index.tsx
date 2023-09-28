@@ -24,7 +24,7 @@ function qd(t, e, i) {
 
 function Vd(t, e) {
   (t = t || new Date().getFullYear()), (e = e || new Date().getMonth() + 1);
-  var i = new Date(t, e - 1, 0),
+  let i = new Date(t, e - 1, 0),
     o = i.getDate(),
     a = i.getDay(),
     s = new Date(t, e, 0),
@@ -40,15 +40,15 @@ function Vd(t, e) {
     g = -1,
     v = -1,
     m = [];
-  for (var T = 0; T <= 6; T++)
+  for (let T = 0; T <= 6; T++)
     T <= a
       ? m.push(h++)
       : (n == t && c == e && l == d && v < 0 && (v = f), m.push(d++)),
       f++;
   u.push(m);
-  for (var A = 6 - a + 1, p = 1, C = 1; C <= 5; C++) {
+  for (let A = 6 - a + 1, p = 1, C = 1; C <= 5; C++) {
     let F = [];
-    for (var x = 0; x < 7; x++)
+    for (let x = 0; x < 7; x++)
       A <= r
         ? (n == t && c == e && l == A && v < 0 && (v = f), F.push(A++))
         : (g < 0 && (g = f), F.push(p++)),

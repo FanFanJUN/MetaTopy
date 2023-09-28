@@ -262,7 +262,7 @@ export const icons_basic = [
 export const icons_form = [
   {
     key: 't-biaoge',
-    title: '列表',
+    title: '表格',
     data: {
       name: 'table2',
       width: 0,
@@ -350,6 +350,156 @@ export const icons_form = [
           ],
         },
       ],
+    },
+  },
+  {
+    key: 't-biaoge',
+    title: '表格2',
+    data: {
+      activeColor: '#278df8',
+      bordered: false,
+      children: [],
+      colPos: [
+        80.66223842652893, 161.32447685305786, 241.9867152795868,
+        322.6489537061157,
+      ],
+      colWidth: 90,
+      color: '#bdc7db',
+      dash: 0,
+      data: [
+        ['序号', '时间', '事件内容', '处理状态'],
+        ['1', '2023/07/10', '设备A告警', '已完成'],
+        [
+          '2',
+          '2023/07/10',
+          '设备B告警',
+          {
+            text: '处理中',
+            textColor: '#faad14',
+          },
+        ],
+        ['3', '2023/07/09', '设备告警', '已完成'],
+        ['4', '2023/07/08', '设备告警', '已完成'],
+        [
+          '5',
+          '2023/07/08',
+          '事件内容',
+          {
+            text: '待处理',
+            textColor: '#f50000',
+          },
+        ],
+        ['6', '2023/07/07', '设备告警', '已完成'],
+        ['7', '2023/07/07', '设备告警', '已完成'],
+        [
+          '8',
+          '2023/07/06',
+          '事件内容',
+          {
+            text: '待处理',
+            textColor: '#f50000',
+          },
+        ],
+        ['9', '2023/07/06', '设备告警', '已完成'],
+        ['10', '2023/07/06', '设备告警', '已完成'],
+        ['11', '2023/07/06', '事件内容', '已完成'],
+        ['12', '2023/07/05', '事件内容', '已完成'],
+        ['13', '2023/07/05', '事件内容', '已完成'],
+        ['14', '2023/07/04', '事件内容', '已完成'],
+        ['15', '2023/07/03', '事件内容', '已完成'],
+      ],
+      disableAnchor: true,
+      fontSize: 12,
+      globalAlpha: 1,
+      hLine: false,
+      height: 200,
+      hoverColor: 'rgba(39,141,248,0.50)',
+      isFirstTime: false,
+      lineHeight: 1.5,
+      lineWidth: 1,
+      name: 'table2',
+      props: {
+        custom: [
+          {
+            key: 'stripe',
+            label: '显示斑马纹',
+            type: 'bool',
+          },
+          {
+            key: 'stripeColor',
+            label: '斑马纹颜色',
+            type: 'color',
+          },
+          {
+            key: 'bordered',
+            label: '外边框',
+            type: 'bool',
+          },
+          {
+            key: 'hLine',
+            label: '水平线',
+            type: 'bool',
+          },
+          {
+            key: 'vLine',
+            label: '垂直线',
+            type: 'bool',
+          },
+          {
+            key: 'hasHeader',
+            label: '有无头部',
+            type: 'bool',
+          },
+          {
+            key: 'data',
+            label: '数据',
+            type: 'code',
+          },
+          {
+            key: 'styles',
+            label: '样式',
+            type: 'code',
+          },
+        ],
+      },
+      rotate: 0,
+      rowHeight: 32,
+      rowPos: [
+        28.679906996099177, 57.359813992198355, 86.03972098829753,
+        114.71962798439671, 143.3995349804959, 172.0794419765951,
+        200.75934897269428, 229.43925596879347, 258.11916296489267,
+        286.79906996099186, 315.47897695709105, 344.15888395319024,
+        372.83879094928943, 401.5186979453886, 430.1986049414878,
+        458.878511937587,
+      ],
+      shadow: false,
+      stripe: true,
+      stripeColor: '#407FFF1F',
+      styles: [
+        {
+          row: 0,
+          textColor: '#ffffff66',
+        },
+        {
+          col: 3,
+          pens: [
+            {
+              disableAnchor: true,
+              fontSize: 0.6,
+              height: 20,
+              lineWidth: 0,
+              name: 'rectangle',
+              width: 56,
+            },
+          ],
+        },
+      ],
+      tableHeight: 458.878511937587,
+      tableWidth: 322.6489537061157,
+      textColor: '#FFFFFF',
+      timer: 4658,
+      vLine: false,
+      width: 700,
     },
   },
   {
@@ -474,33 +624,6 @@ export const icons_form = [
         { text: '选项1', background: '#ff0000' },
         { text: '选项2', background: '#00ff00' },
         { text: '选项3', background: '#0000ff' },
-      ],
-    },
-  },
-  {
-    key: 't-clock',
-    title: '时间',
-    data: {
-      name: 'time',
-      timeFormat:
-        '`${year}-${month}-${day} ${hours}:${minutes}:${seconds} 星期${week}`',
-      fillZero: true,
-      width: 218,
-      height: 32,
-      text: '2023-09-21 09:14:45 星期四',
-      interval: 4166,
-      lineWidth: 0,
-      form: [
-        {
-          key: 'timeFormat',
-          name: '显示格式',
-          type: 'text',
-        },
-        {
-          key: 'fillZero',
-          name: '是否补0',
-          type: 'switch',
-        },
       ],
     },
   },
@@ -1045,185 +1168,6 @@ export const brainMap = [
       height: 36,
       lineHeight: 1.5,
       lineWidth: 1,
-    },
-  },
-];
-
-export const other_graphics = [
-  {
-    key: 'icon-wenduji',
-    title: '温度计',
-    data: {
-      name: 'thermometer',
-      width: 32,
-      height: 128,
-      background: '#FF5D3C33',
-      bkType: 0,
-      activeBacground: '#FF5D3C',
-      color: '#4583FF',
-      dash: 0,
-      disableAnchor: true,
-      fontSize: 12,
-      max: 20,
-      min: -20,
-      textColor: '#FFFFFFB3',
-      value: -10,
-      form: [
-        {
-          key: 'value',
-          name: '温度',
-          type: 'number',
-        },
-        {
-          key: 'min',
-          name: '最小值',
-          type: 'number',
-        },
-        {
-          key: 'max',
-          name: '最大值',
-          type: 'number',
-        },
-      ],
-    },
-  },
-  {
-    key: 'icon-liebiao',
-    title: '列表',
-    data: {
-      name: 'list',
-      background: '#282E3B',
-      width: 400,
-      height: 200,
-      textColor: '#FFFFFF66',
-      globalAlpha: 1,
-      headingColor: '#FFFFFFE6',
-      headingSize: 16,
-      dash: 0,
-      hoverTextColor: '#FFFFFF66',
-      shadow: false,
-      data: [
-        {
-          title: '列表标题',
-          description: '列表内容的描述性文字',
-        },
-        {
-          title: '列表标题',
-          description: '列表内容的描述性文字',
-        },
-        {
-          title: '列表标题',
-          description: '列表内容的描述性文字',
-        },
-      ],
-      props: {
-        custom: [
-          {
-            key: 'data',
-            label: '数据',
-            type: 'code',
-          },
-          {
-            key: 'background',
-            label: '背景颜色',
-            type: 'color',
-          },
-          {
-            key: 'headingSize',
-            label: '标题大小',
-            type: 'number',
-          },
-          {
-            key: 'headingColor',
-            label: '标题颜色',
-            type: 'color',
-          },
-        ],
-      },
-    },
-  },
-  {
-    key: 'icon-lunbo',
-    title: '水平轮播',
-    data: {
-      name: 'swiperline',
-      data: ['轮播第一次数据', '轮播第二次数据', '轮播第三次数据'],
-      width: 180,
-      height: 36,
-      hiddenText: true,
-      props: {
-        custom: [
-          {
-            key: 'data',
-            label: '数据',
-            type: 'code',
-          },
-          {
-            key: 'timeout',
-            label: '轮播时间',
-            type: 'number',
-          },
-        ],
-      },
-    },
-  },
-  {
-    title: '垂直轮播',
-    key: 'icon-lunboshezhi',
-    data: {
-      name: 'swiperline',
-      width: 200,
-      height: 24,
-      direction: 'vertical',
-      lineHeight: 2,
-      data: ['轮播第一次数据', '轮播第二次数据', '轮播第三次数据'],
-      hiddenText: true,
-      props: {
-        custom: [
-          {
-            key: 'data',
-            label: '数据',
-            type: 'code',
-          },
-          {
-            key: 'timeout',
-            label: '轮播时间',
-            type: 'number',
-          },
-        ],
-      },
-    },
-  },
-  {
-    title: '球形水位',
-    key: 't-shuiliujianceqi',
-    fontFamily: 't-icon',
-    data: {
-      name: 'watermeter',
-      width: 128,
-      height: 128,
-      disableAnchor: !0,
-      background: '#4583FF',
-      value: 50,
-      max: 70,
-      min: 20,
-      maxBackground: '#f5222d',
-      minBackground: '#52c41a',
-      scaleShow: !1,
-    },
-  },
-  {
-    title: '圆柱水位',
-    key: 't-db',
-    fontFamily: 't-icon',
-    data: {
-      name: 'waterTank',
-      width: 128,
-      height: 128,
-      disableAnchor: !0,
-      color: '#FFFFFF00',
-      progress: 0.5,
-      progressColor: '#4583FF',
     },
   },
 ];

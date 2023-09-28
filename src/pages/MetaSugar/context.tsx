@@ -1,9 +1,10 @@
-import { Meta2d } from '@meta2d/core';
+import type { Meta2d } from '@meta2d/core';
 import React from 'react';
 
 export interface IMeta extends Meta2d {
   isEmptyData: Function;
   isScreen: Function;
+  isPreView: boolean;
 }
 
 export interface AppContextInterface {

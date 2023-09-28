@@ -2,7 +2,8 @@ import { useSetState } from 'ahooks';
 import { useState } from 'react';
 import { Header, LeftMaterial, Meta2dProps } from './components';
 import { MainMeta } from './container';
-import { IMeta, MetaContext } from './context';
+import type { IMeta } from './context';
+import { MetaContext } from './context';
 import styles from './index.less';
 
 const App = () => {
@@ -34,14 +35,12 @@ const App = () => {
         // 选中
         if (data && data?.length === 1) {
           const { name } = data[0];
-          if (name == 'line') {
+          if (name === 'line') {
             setState({ type: 'line', selected: true, selectedData: data[0] });
           } else {
             setState({ type: 'node', selected: true, selectedData: data[0] });
           }
         } else {
-          console.log(data);
-
           setState({ type: 'multi', selected: true, multiData: data });
         }
         break;

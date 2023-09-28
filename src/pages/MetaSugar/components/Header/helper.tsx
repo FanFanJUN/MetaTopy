@@ -117,11 +117,21 @@ export const TOOL_LIST = [
     },
   },
   {
+    name: '大屏',
+    toolKey: 'screen',
+    icon: 'meta icon-erji-dapingjianguan',
+  },
+  {
     name: '保存',
     toolKey: 'save',
   },
   {
     isSplit: true,
+  },
+  {
+    name: '新建',
+    toolKey: 'newFile',
+    oComp: true,
   },
   {
     name: '钢笔',
@@ -181,6 +191,14 @@ export const TOOL_LIST = [
   {
     name: '禁用描点',
     toolKey: 'jinzhimiaodian',
+  },
+  {
+    name: '视图',
+    toolKey: 'view',
+    dropdown: {
+      type: 'view',
+    },
+    oComp: true,
   },
   {
     name: '自适应',

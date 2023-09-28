@@ -3,20 +3,6 @@ import { ReactComponent as S2 } from '@/assets/svg/lineStyle/2.svg';
 import { ReactComponent as S3 } from '@/assets/svg/lineStyle/3.svg';
 import { ReactComponent as S4 } from '@/assets/svg/lineStyle/4.svg';
 
-const FamilyList = [
-  'sans-serif',
-  'monospace',
-  'cursive',
-  'fantasy',
-  'system-ui',
-  'emoji',
-  'math',
-  'fangsong',
-  '宋体',
-  '微软雅黑',
-  '黑体',
-];
-
 export const Show_List = [
   {
     name: '位置和大小',
@@ -254,6 +240,30 @@ export const Show_List = [
           { value: 'middle', label: '居中' },
           { value: 'bottom', label: '底部对齐' },
         ],
+      },
+    ],
+  },
+  {
+    name: '图片',
+    toolKey: 'image',
+    uiHidden: (value: any) => {
+      return value.name !== 'image';
+    },
+    cList: [
+      {
+        name: '图片预览',
+        toolKey: 'disableInput',
+        type: 'imagePreview',
+      },
+      {
+        name: '图片地址',
+        toolKey: 'image',
+        type: 'textArea',
+      },
+      {
+        name: '下层',
+        toolKey: 'isBottom',
+        type: 'switch',
       },
     ],
   },

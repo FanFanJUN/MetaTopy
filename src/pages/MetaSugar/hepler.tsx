@@ -1,5 +1,9 @@
+import type { Pen } from '@meta2d/core';
 import _, { isNil } from 'lodash';
+import registerNode from './components/plugs/registerNode';
 import {
+  AntdButton,
+  BatteryCanvas,
   Beeline,
   Calendar,
   List,
@@ -8,13 +12,14 @@ import {
   WaterMeter,
   WaterTank,
 } from './components/registerComp';
-import { IMeta } from './context';
+import type { IMeta } from './context';
 
 /**
  * meta2d 拓展方法和属性
  * @param meta2d
  */
-export const setFunMeta2D = (meta2d: IMeta) => {
+export const setFunMeta2D = (meta2d: IMeta, values: any) => {
+  meta2d.isPreView = values?.isPreView ?? false;
   meta2d.isEmptyData = () => {
     return _.isEmpty(meta2d.data().pens);
   };
@@ -83,7 +88,7 @@ export async function onWaitPromise(time = 500) {
  * @description 其他注册组件 name 组件在画布中的名称 唯一
  * @param meta2d
  */
-export const registerCustomDraw = (meta2d: IMeta) => {
+export const registerCustomCanvasDraw = (meta2d: IMeta) => {
   meta2d.registerCanvasDraw({
     beeline: Beeline,
     thermometer: Thermometer,
@@ -92,5 +97,13 @@ export const registerCustomDraw = (meta2d: IMeta) => {
     swiperline: Swiperline,
     watermeter: WaterMeter,
     waterTank: WaterTank,
+    battery: (ctx: CanvasRenderingContext2D, pen: Pen) =>
+      BatteryCanvas(ctx, pen, meta2d),
+  });
+};
+
+export const registerCustomDomDraw = (meta2d: IMeta) => {
+  meta2d.register({
+    antdButton: registerNode(AntdButton, meta2d),
   });
 };

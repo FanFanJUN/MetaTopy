@@ -6,7 +6,7 @@ import {
   LockOutlined,
   UnlockOutlined,
 } from '@ant-design/icons';
-import { Pen } from '@meta2d/core';
+import type { Pen } from '@meta2d/core';
 import { useUpdate } from 'ahooks';
 import React from 'react';
 import styles from './index.less';

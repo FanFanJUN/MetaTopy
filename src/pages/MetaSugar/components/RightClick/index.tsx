@@ -47,8 +47,7 @@ function RightClickFloat(props) {
             ),
         );
     }
-
-    floatArr.map((f: FloatMenuProps) => {
+    floatArr?.forEach((f: FloatMenuProps) => {
       f.noDrop = false;
       // @ts-ignore
       if (f?.id === FLOAT_ID_ENUM.combine || f?.name === FLOAT_ID_ENUM.combine)
@@ -199,8 +198,8 @@ function RightClickFloat(props) {
         ref={infoRef}
         className={styles.float_info}
         style={{
-          top: bounds?.y || 0,
-          left: bounds?.x || 0,
+          top: bounds?.clientY - 50 || 0,
+          left: bounds?.clientX - 220 || 0,
         }}
       >
         {float.map((f: FloatMenuProps, i) => {
@@ -212,8 +211,9 @@ function RightClickFloat(props) {
                 <div
                   key={i}
                   onClick={() => menuClick(f)}
+                  data-type={f?.type}
                   className={`${styles.float_info_slide} ${
-                    f?.noDrop ? styles.float_info_noDrop : ''
+                    f?.noDrop ? styles.float_info_slide_noDrop : ''
                   }`}
                 >
                   {f?.left ? <span>{f?.left}</span> : null}

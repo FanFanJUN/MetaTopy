@@ -72,7 +72,7 @@ const LeftMaterial = () => {
                   style={{ display: isShow ? '' : 'none' }}
                 >
                   {item.list.map((icon) => {
-                    const { key, title, data } = icon;
+                    const { key, title, data, type, url } = icon;
                     if (icon.useSvg) {
                       return (
                         <div
@@ -91,14 +91,23 @@ const LeftMaterial = () => {
                         key={key}
                         className={styles.iconTabList__item__list__item}
                         title={icon.title}
+                        style={{ flex: data.isTemplate ? '0 0 100%' : '' }}
                       >
-                        <i
-                          className={`${
-                            icon.fontFamily || item.fontFamily
-                          } ${key}`}
-                          title={title}
-                          {...dragEventResolve(meta2d, data)}
-                        ></i>
+                        {type === 'image' ? (
+                          <img
+                            src={url}
+                            {...dragEventResolve(meta2d, data)}
+                            style={{ width: '100%', height: '90px' }}
+                          />
+                        ) : (
+                          <i
+                            className={`${
+                              icon.fontFamily || item.fontFamily
+                            } ${key}`}
+                            title={title}
+                            {...dragEventResolve(meta2d, data)}
+                          ></i>
+                        )}
                         <span className={styles.desc}>{title}</span>
                       </div>
                     );
@@ -138,9 +147,7 @@ const LeftMaterial = () => {
                 }
               }}
             >
-              <svg className={styles.ticonscg}>
-                <use href={`#${item.icon}`}></use>
-              </svg>
+              <i className={`meta ${item.icon}`}></i>
               <p>{item.name}</p>
             </div>
           );

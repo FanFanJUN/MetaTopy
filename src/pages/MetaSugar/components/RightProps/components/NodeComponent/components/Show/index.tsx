@@ -2,14 +2,13 @@ import { useMeta } from '@/pages/MetaSugar/context';
 import ColorPicker from '@/pages/component/ColorPicker';
 import { ArrowDownOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useSetState } from 'ahooks';
-import { Input, InputNumber, Select, Switch } from 'antd';
+import { Image, Input, InputNumber, Select, Switch } from 'antd';
 import { cloneDeep, map, round } from 'lodash';
 import React from 'react';
 import { Show_List } from './helper';
 import styles from './index.less';
-interface IAppProps {}
 
-const Show: React.FunctionComponent<IAppProps> = (props) => {
+const Show: React.FunctionComponent = () => {
   const [state, setState] = useSetState({
     activeTab: 'system',
     expandKeys: map(Show_List, 'toolKey'),
@@ -123,6 +122,10 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
           }
         />
       );
+    } else if (item.type === 'imagePreview') {
+      return (
+        <Image src={values?.image} style={{ width: '50px', height: 'auto' }} />
+      );
     }
     return <Input />;
   };
@@ -133,6 +136,7 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
       case 'disable':
       case 'text':
       case 'style':
+      case 'image':
         return obj.cList.map((item) => {
           const values = meta2d.store.active?.[0] || {};
           if (item.uiHidden) {
@@ -168,6 +172,12 @@ const Show: React.FunctionComponent<IAppProps> = (props) => {
     <div className={styles.showWrap}>
       {Show_List.map((item) => {
         const isShow = state.expandKeys.includes(item.toolKey);
+        if (item.uiHidden) {
+          const values = meta2d.store.active?.[0] || {};
+          if (item.uiHidden(values)) {
+            return null;
+          }
+        }
         return (
           <div key={item.toolKey} className={styles.showWrap_item}>
             <div className={styles.showWrap_item_name}>

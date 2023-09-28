@@ -4,9 +4,11 @@
   border-right: 1px solid #ddd;
   display: flex;
   overflow: auto;
+
   &__tab {
     display: flex;
     flex-direction: column;
+
     &__item {
       position: relative;
       cursor: pointer;
@@ -19,18 +21,26 @@
       align-items: center;
       justify-content: center;
       color: #7f838c;
+
+      & > i {
+        font-size: 20px;
+      }
+
       .ticonscg {
         width: 20px;
         height: 20px;
       }
+
       p {
         font-size: 14px;
         line-height: 20px;
         font-weight: 400;
       }
+
       &[data-isactive='true'] {
         border-left: 2px solid #306eff;
       }
+
       &[data-isactive='true'],
       &:hover {
         background-color: #f7f8f9;
@@ -38,55 +48,66 @@
       }
     }
   }
+
   &__content {
     display: flex;
     flex: 1;
     background: #f7f8f9;
+
     &__system {
       flex: 1 1;
       display: flex;
       padding-top: 10px;
       flex-direction: column;
       overflow: auto;
+
       .iconTabList {
         flex: 1;
         overflow: auto;
+
         &__item {
           &__list {
             display: flex;
             padding: 4px 6px 16px;
             flex-wrap: wrap;
+
             &__usesvg {
               cursor: pointer;
               width: 25px;
               height: 25px;
               margin-right: 15px;
+
               .ticonusescg {
                 height: 100%;
                 width: 100%;
               }
             }
+
             &__item {
               flex: 0 0 32.9%;
               display: flex;
               flex-direction: column;
               align-items: center;
+
               .desc {
                 text-overflow: ellipsis;
                 transform: scale(0.83);
                 white-space: nowrap;
-                margin: 0px auto;
+                margin: 0 auto;
                 justify-content: center;
                 overflow: hidden;
                 max-width: 50px;
                 font-size: 10px;
               }
+
               cursor: pointer;
+
               i {
                 font-size: 25px;
                 min-width: 10px;
                 min-height: 10px;
               }
+
               &:hover {
                 color: #1890ff;
               }
@@ -94,12 +115,15 @@
           }
         }
       }
+
       .iconButton {
         &__inner {
           cursor: pointer;
+
           [class~='anticon-appstore-add'] {
             margin-right: 4px;
           }
+
           width: 170px;
           height: 30px;
           border-radius: 1px;
@@ -110,6 +134,7 @@
           line-height: 30px;
           text-align: center;
         }
+
         width: 100%;
         height: 54px;
         display: flex;

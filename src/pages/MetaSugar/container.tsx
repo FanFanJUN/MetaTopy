@@ -17,11 +17,13 @@ import { useEffect, useState } from 'react';
 import { RightClick } from './components';
 import { previewData } from './components/Header/helper';
 import { containerDragResolve } from './components/LeftMaterial/crossDrag';
-import { IMeta } from './context';
+import { clearNodes } from './components/plugs/registerNode';
+import type { IMeta } from './context';
 import {
   PreviewButton,
   preConf,
-  registerCustomDraw,
+  registerCustomCanvasDraw,
+  registerCustomDomDraw,
   setFunMeta2D,
 } from './hepler';
 import styles from './index.less';
@@ -31,6 +33,8 @@ const options = {
   rule: true,
   color: '#278df8',
   locked: 0,
+  hoverAnchorColor: '#FF4101',
+  rotateCursor: '/other/rotate.cur',
 };
 
 let metaTopology = null;
@@ -48,6 +52,7 @@ export const MainMeta = (props) => {
   const [meta2d, setState] = useState<IMeta>(null);
   const isPreView = pageType === 'preview';
   useEffect(() => {
+    if (metaTopology) return;
     // @ts-ignore
     metaTopology = new Meta2d('meta2d', {
       ...options,
@@ -73,13 +78,14 @@ export const MainMeta = (props) => {
       meta2d.registerCanvasDraw(formPens());
       meta2d.register(formPath2DPens()); //版本>=1.0.9
       // 其他注册组件
-      registerCustomDraw(meta2d);
+      registerCustomCanvasDraw(meta2d);
+      registerCustomDomDraw(meta2d);
       meta2d.register(flowPens());
       registerEcharts();
       registerHighcharts();
       registerLightningChart();
       meta2d.on('*', onMessage); // 监听所有事件
-      setFunMeta2D(meta2d);
+      setFunMeta2D(meta2d, { isPreView });
       const preData = JSON.parse(previewData) || {};
       // const pens = preData?.pens || [];
       /*  pens.forEach((item) => {
@@ -100,7 +106,7 @@ export const MainMeta = (props) => {
           (!isNil(meta2d.store.data?.height) &&
             !isNil(meta2d.store.data?.width))
         ) {
-          meta2d.setBackgroundColor('#1e2430');
+          meta2d.setBackgroundColor(meta2d.store.data.background || '#1e2430');
         }
         meta2d.lock(1);
         meta2d.setRule({ rule: false });
@@ -117,9 +123,10 @@ export const MainMeta = (props) => {
     }
     return () => {
       metaTopology = null;
+      clearNodes();
       meta2d && meta2d.off('*', onMessage);
     };
-  }, [meta2d]);
+  }, [isLoad]);
 
   const _handleOp = (tKey: string) => {
     switch (tKey) {
@@ -158,7 +165,9 @@ export const MainMeta = (props) => {
               width: '100%',
               flexShrink: '0',
               position: 'relative',
-              background: meta2d?.isScreen() ? '#1e2430' : '',
+              background: meta2d?.isScreen()
+                ? meta2d.store.data.background || '#1e2430'
+                : '',
             }
           : meta2d?.isScreen()
           ? { background: '#181b24' }

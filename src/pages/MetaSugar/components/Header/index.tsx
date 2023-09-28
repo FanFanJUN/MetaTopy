@@ -1,18 +1,17 @@
+import NP from '@/utils/NP';
 import { deepClone } from '@meta2d/core';
 import { parseSvg } from '@meta2d/svg';
 import { useSetState, useUpdate } from 'ahooks';
-import { Dropdown, InputNumber, message } from 'antd';
+import { Button, Dropdown, InputNumber, message } from 'antd';
 import * as FileSaver from 'file-saver';
-import { keyBy } from 'lodash';
+import { isNil, keyBy } from 'lodash';
 import React, { useEffect } from 'react';
 import { history } from 'umi';
 import { useMeta } from '../../context';
 import { SelectOption, TOOL_LIST, savePreviewData } from './helper';
 import styles from './index.less';
 
-interface IHeaderProps {}
-
-const Header: React.FunctionComponent<IHeaderProps> = (props) => {
+const Header: React.FunctionComponent = () => {
   const update = useUpdate();
   const { meta2d } = useMeta();
   const [state, setState] = useSetState({
@@ -47,6 +46,13 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
             if (data.topologyData?.main) {
               data.pens = data.topologyData?.main;
             }
+            data?.pens?.forEach((item) => {
+              if (!isNil(item.locked)) {
+                if ((item.locked = 10)) {
+                  item.locked = 2;
+                }
+              }
+            });
             meta2d.open(data);
             if (data.isScreen) {
               meta2d.fitSizeView();
@@ -160,6 +166,14 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         // @ts-ignore
         meta2d.open({ pens: [] });
         break;
+      case 'screen':
+        resetEvent();
+        // @ts-ignore
+        meta2d.open({ pens: [] });
+        meta2d.store.data.width = 1920;
+        meta2d.store.data.height = 1080;
+        meta2d.fitSizeView();
+        break;
       case 'downLoadJson':
         FileSaver.saveAs(
           new Blob([JSON.stringify(meta2d.data())], {
@@ -229,6 +243,8 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
     const currentObj = meta2d?.store?.data ?? {};
     if (item.oComp) {
       switch (item.toolKey) {
+        case 'newFile':
+          return <i className={`meta icon-new_document`} />;
         case 'lockStatus': {
           const lockIcon = {
             0: 'unlock',
@@ -242,6 +258,12 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
         case 'xiankuan':
           return (
             <span className={styles.topItem__value}>{state.lineWidth}</span>
+          );
+        case 'view':
+          return (
+            <span className={styles.topItem__value}>
+              {NP.times(NP.round(currentObj.scale ?? 1, 2), 100)}%
+            </span>
           );
         case 'fitView':
           return <div className={styles[`topItem__${item.toolKey}`]} />;
@@ -271,7 +293,52 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
           break;
       }
     }
-    return <i className={`t-icon t-${item.toolKey}`} />;
+    return <i className={item.icon || `t-icon t-${item.toolKey}`} />;
+  };
+
+  const _renderView = () => {
+    const scaleNumber = meta2d.store.data.scale;
+    return (
+      <>
+        <i
+          className={'t-icon t-reduce'}
+          onClick={() => {
+            meta2d.scale(scaleNumber - 0.01);
+            meta2d.centerView();
+            update();
+          }}
+        />
+        <i
+          className={'t-icon t-add'}
+          onClick={() => {
+            meta2d.scale(scaleNumber + 0.01);
+            meta2d.centerView();
+            update();
+          }}
+        />
+        <Button
+          onClick={() => {
+            if (meta2d.isScreen()) {
+              meta2d.fitSizeView();
+            } else {
+              meta2d.fitView();
+            }
+            update();
+          }}
+        >
+          自适应
+        </Button>
+        <Button
+          onClick={() => {
+            meta2d.scale(1);
+            meta2d.centerView();
+            update();
+          }}
+        >
+          重置
+        </Button>
+      </>
+    );
   };
 
   return (
@@ -354,7 +421,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               Object.assign(dropDownObj, {
                 dropdownRender: () => {
                   return (
-                    <div className={styles.dropdown__renderInput}>
+                    <div className={styles.dropdown__render}>
                       <InputNumber
                         value={state.lineWidth}
                         step={1}
@@ -365,6 +432,19 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
                           setState({ lineWidth: value });
                         }}
                       />
+                    </div>
+                  );
+                },
+              });
+            } else if (type === 'view') {
+              Object.assign(dropDownObj, {
+                dropdownRender: () => {
+                  return (
+                    <div
+                      className={styles.dropdown__render}
+                      data-compkey={item.toolKey}
+                    >
+                      {_renderView()}
                     </div>
                   );
                 },

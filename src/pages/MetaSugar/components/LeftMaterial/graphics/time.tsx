@@ -1,7 +1,8 @@
 export const time_graphics = [
   {
-    key: 'icon-shijian',
+    key: 't-clock',
     title: '时间',
+    fontFamily: 't-icon',
     data: {
       name: 'time',
       timeFormat:
